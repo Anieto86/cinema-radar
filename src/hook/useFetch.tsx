@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 export const useFetch = (URL: string) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<unknown>(null);
+  const [error, setError] = useState(null);
 
   const fetchData = useCallback(async () => {
     try {
@@ -15,7 +15,7 @@ export const useFetch = (URL: string) => {
     } finally {
       setLoading(false);
     }
-  }, [URL]);
+  }, [URL, setError]);
 
   useEffect(() => {
     fetchData();

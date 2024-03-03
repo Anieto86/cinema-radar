@@ -1,16 +1,32 @@
-import { useFetch } from '../hook/useFetch';
+import {
+  Box,
+  Divider,
+  List,
+  ListItem,
+  ListItemButton,
+  Typography,
+} from '@mui/material';
 
-export const MovieList = () => {
-  const key = import.meta.env.VITE_REACT_APP_OMDb_API_KEY;
-
-  const OMDbAPI = `http://www.omdbapi.com/?i=tt3896198&apikey=${key}`;
-  const { data, loading, error } = useFetch(OMDbAPI);
-
-  console.log(data);
-  console.log(loading);
-  console.log(error);
-
-  if (loading) return <div>Loading...</div>;
-
-  return <div>MovieList</div>;
+export const MovieList = ({ dataList }) => {
+  return (
+    <Box sx={{ display: 'flex', border: 'solid 1px red' }}>
+      <List sx={{}}>
+        {dataList.map(
+          (m: { Title: string; Poster: string; imdbID: string }) => {
+            console.log(m);
+            return (
+              <ListItem key={m.imdbID}>
+                <ListItemButton>
+                  <img src={m.Poster} alt="movies-poster"></img>
+                  <Divider sx={{}} />
+                  <Typography sx={{ color: 'black' }}>{m.Title}</Typography>
+                  <Typography>{m.Year}</Typography>
+                </ListItemButton>
+              </ListItem>
+            );
+          }
+        )}
+      </List>
+    </Box>
+  );
 };
