@@ -1,7 +1,9 @@
 import { useFetch } from '../hook/useFetch';
 
 export const MovieList = () => {
-  const OMDbAPI = 'http://www.omdbapi.com/?i=tt3896198&apikey=2de1e68d';
+  const key = import.meta.env.VITE_REACT_APP_OMDb_API_KEY;
+
+  const OMDbAPI = `http://www.omdbapi.com/?i=tt3896198&apikey=${key}`;
   const { data, loading, error } = useFetch(OMDbAPI);
 
   console.log(data);
