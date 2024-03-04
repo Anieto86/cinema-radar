@@ -24,7 +24,6 @@ export const TypeSelect = () => {
         onChange={handleRadioChange}
       >
         <FormControlLabel value="any" control={<Radio />} label="Any" />
-
         <FormControlLabel value="movies" control={<Radio />} label="Movies" />
         <FormControlLabel value="series" control={<Radio />} label="Series" />
         <FormControlLabel

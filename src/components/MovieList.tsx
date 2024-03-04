@@ -9,11 +9,11 @@ import {
 
 export const MovieList = ({ dataList }) => {
   return (
-    <Box sx={{ display: 'flex', border: 'solid 1px red' }}>
-      <List sx={{}}>
+    <Box sx={{ display: 'flex', border: 'solid 1px red', overflowY: 'scroll' }}>
+      <List>
         {dataList.map(
           (m: { Title: string; Poster: string; imdbID: string }) => {
-            console.log(m);
+            // console.log(m);
             return (
               <ListItem key={m.imdbID}>
                 <ListItemButton>
