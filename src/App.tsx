@@ -10,16 +10,22 @@ const key = import.meta.env.VITE_REACT_APP_OMDb_API_KEY;
 
 function App() {
   const [searchMovie, setSearchMovie] = useState('avengers');
+  const [searchYear, setSearchYear] = useState('2008');
   const [searchType, setSearchType] = useState('');
 
-  const OMDbAPI = `http://www.omdbapi.com/?s=${searchMovie}&apikey=${key}&type=${searchType}`;
+  const OMDbAPI = `http://www.omdbapi.com/?s=${searchMovie}&apikey=${key}&type=${searchType}&y=${searchYear}`;
 
-  const { data, loading } = useFetch(OMDbAPI);
+  const { data, loading, error } = useFetch(OMDbAPI);
 
   if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error</div>;
 
   const handleSearchMovie = (value: string) => {
     setSearchMovie(value);
+  };
+
+  const handleSearchYear = (value: string) => {
+    setSearchYear(value);
   };
 
   const handleSearchMovieType = (value: string) => {
@@ -34,6 +40,8 @@ function App() {
           onSearchMovie={handleSearchMovie}
           searchType={searchType}
           onSearchMovieType={handleSearchMovieType}
+          searchYear={searchYear}
+          onSearchYear={handleSearchYear}
         />
       </Grid>
       <Grid item xs={5}>

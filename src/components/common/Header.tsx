@@ -7,18 +7,19 @@ import {
   FormLabel,
   Radio,
   RadioGroup,
+  Slider,
+  Box,
 } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 
-import { YearSlider } from './YearSlider';
-// import { TypeSelect } from './TypeSelect';
-
 interface IProp {
   searchMovie: string;
   searchType: string;
+  searchYear: string;
   onSearchMovie: (searchMovie: string) => void;
   onSearchMovieType: (searchType: string) => void;
+  onSearchYear: (searchYear: string) => void;
 }
 
 export const Header = ({
@@ -26,6 +27,8 @@ export const Header = ({
   onSearchMovie,
   searchType,
   onSearchMovieType,
+  searchYear,
+  onSearchYear,
 }: IProp) => {
   return (
     <AppBar position="static" sx={{ bgcolor: '#666666', height: '120px' }}>
@@ -49,7 +52,15 @@ export const Header = ({
             />
           </Grid>
           <Grid item xs={3}>
-            <YearSlider />
+            <Box sx={{ width: 300 }}>
+              <Slider
+                value={+searchYear}
+                min={1700}
+                max={2024}
+                onChange={(e) => onSearchYear(e.target.value)}
+                valueLabelDisplay="auto"
+              />
+            </Box>
           </Grid>
           <Grid item xs={3}>
             <FormControl>
