@@ -1,27 +1,45 @@
 import './App.css';
 import { MovieList } from './components/MovieList';
 import { Header } from './components/common/Header';
+// import { ErrorPage } from './routes/ErrorPage';
 import { MovieContent } from './components/MovieContent';
 import { Grid } from '@mui/material';
 import { useFetch } from './hook/useFetch';
 import { useState } from 'react';
-
-const key = import.meta.env.VITE_REACT_APP_OMDb_API_KEY;
+interface MovieType {
+  Poster: string;
+  Title: string;
+  Type: string;
+  Year: string;
+  imdbID: string;
+}
 
 function App() {
-  const [searchMovie, setSearchMovie] = useState('star wars');
-  const [searchYear, setSearchYear] = useState('1980');
-  const [searchType, setSearchType] = useState('');
-  const [selectMovie, setSelectMovie] = useState(0);
+  const [searchMovie, setSearchMovie] = useState<string | undefined>(
+    'star wars'
+  );
+  const [searchYear, setSearchYear] = useState<string | undefined>();
+  const [searchType, setSearchType] = useState<string>('');
+  const [selectMovie, setSelectMovie] = useState<number>(0);
 
-  const OMDbAPI = `http://www.omdbapi.com/?s=${searchMovie}&apikey=${key}&type=${searchType}&y=${searchYear}`;
+  // const OMDbAPI = `http://www.omdbapi.com/?s=${searchMovie}&apikey=${key}&type=${searchType}&y=${searchYear}`;
 
-  const { data, loading, error } = useFetch(OMDbAPI);
+  // const { data, loading, error } = useFetch(OMDbAPI);
+
+  const { data, loading, error } = useFetch(
+    searchMovie,
+    searchYear,
+    searchType
+  );
+
+  console.log(data);
 
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error</div>;
+  if (error) return <div>error</div>;
 
-  const handleSearchMovie = (value: string) => {
+  const id: MovieType = data[selectMovie];
+
+  const handleSearchMovie = (value: string | undefined) => {
     setSearchMovie(value);
   };
 
@@ -38,8 +56,9 @@ function App() {
   };
 
   // Check if data exists before accessing Search property
-  const selectedMovie = data[selectMovie];
-  // console.log(selectedMovie);
+
+  // conconst sole.log(id);\
+  // const movie = id || 0;
 
   return (
     <Grid container>
@@ -61,7 +80,7 @@ function App() {
         />
       </Grid>
       <Grid item xs={7} sx={{ border: '2px solid blue' }}>
-        <MovieContent imdbID={selectedMovie.imdbID} />
+        <MovieContent imdbID={id.imdbID} />
       </Grid>
     </Grid>
   );

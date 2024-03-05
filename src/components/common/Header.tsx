@@ -14,9 +14,9 @@ import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 
 interface IProp {
-  searchMovie: string;
-  searchType: string;
-  searchYear: string;
+  searchMovie?: string;
+  searchType?: string;
+  searchYear?: string;
   onSearchMovie: (searchMovie: string) => void;
   onSearchMovieType: (searchType: string) => void;
   onSearchYear: (searchYear: string) => void;
@@ -47,14 +47,14 @@ export const Header = ({
               InputProps={{
                 startAdornment: <SearchIcon />,
               }}
-              value={searchMovie}
+              value={searchMovie ?? null}
               onChange={(e) => onSearchMovie(e.target.value)}
             />
           </Grid>
           <Grid item xs={3}>
             <Box sx={{ width: 300 }}>
               <Slider
-                value={+searchYear}
+                value={+searchYear ?? null}
                 min={1700}
                 max={2024}
                 onChange={(e) => onSearchYear(e.target.value)}
@@ -74,7 +74,7 @@ export const Header = ({
                 value={searchType}
                 onChange={(e) => onSearchMovieType(e.target.value)}
               >
-                <FormControlLabel value="any" control={<Radio />} label="Any" />
+                <FormControlLabel value={''} control={<Radio />} label="Any" />
                 <FormControlLabel
                   value="movie"
                   control={<Radio />}
