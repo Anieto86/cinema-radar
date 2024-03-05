@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-export const useFetch = (URL: string) => {
+export const useFetchMovie = (URL: string) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<null | Error>(null);
@@ -11,10 +11,8 @@ export const useFetch = (URL: string) => {
       const response = await fetch(URL);
       const responseJson = await response?.json();
 
-      if (responseJson.Search) {
-        setData(responseJson.Search);
-        setLoading(false);
-      }
+      setData(responseJson);
+      setLoading(false);
     } catch (error) {
       if (error instanceof Error) {
         setError(error);

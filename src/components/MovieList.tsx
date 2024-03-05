@@ -6,50 +6,39 @@ import {
   ListItemButton,
   Typography,
 } from '@mui/material';
-import { useState } from 'react';
 
+interface dataListType {
+  Year: string;
+  Title: string;
+  Poster: string;
+  imdbID: string;
+}
 interface IProp {
-  dataList: [];
+  selectMovie: number;
+  dataList: dataListType[];
+  onSelectMovie: (i: number) => void;
 }
 
-export const MovieList = ({ dataList }: IProp) => {
-  const [selectedIndex, setSelectedIndex] = useState(1);
-
-  const handleListItemClick = (
-    _event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    index: number
-  ) => {
-    setSelectedIndex(index);
-  };
-
+export const MovieList = ({ dataList, selectMovie, onSelectMovie }: IProp) => {
   return (
     <Box sx={{ display: 'flex', border: 'solid 1px red', overflowY: 'scroll' }}>
       <List>
-        {dataList.map(
-          (
-            m: {
-              Year: string;
-              Title: string;
-              Poster: string;
-              imdbID: string;
-            },
-            i: number
-          ) => {
-            return (
-              <ListItem key={m.imdbID}>
-                <ListItemButton
-                  selected={selectedIndex === i}
-                  onClick={(event) => handleListItemClick(event, i)}
-                >
-                  <img src={m.Poster} alt="movies-poster"></img>
-                  <Divider sx={{}} />
-                  <Typography sx={{ color: 'black' }}>{m.Title}</Typography>
-                  <Typography>{m.Year}</Typography>
-                </ListItemButton>
-              </ListItem>
-            );
-          }
-        )}
+        {dataList?.map((m, i: number) => {
+          console.log(m.Title);
+          return (
+            <ListItem key={m.imdbID}>
+              <ListItemButton
+                selected={selectMovie === i}
+                onClick={() => onSelectMovie(i)}
+              >
+                <img src={m.Poster} alt="movies-poster"></img>
+                <Divider sx={{}} />
+                <Typography sx={{ color: 'black' }}>{m.Title}</Typography>
+                <Typography>{m.Year}</Typography>
+              </ListItemButton>
+            </ListItem>
+          );
+        })}
       </List>
     </Box>
   );
