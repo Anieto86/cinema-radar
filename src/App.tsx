@@ -1,4 +1,5 @@
 import './App.css';
+import { debounce } from 'lodash';
 import { MovieList } from './components/MovieList';
 import { Header } from './components/common/Header';
 // import { ErrorPage } from './routes/ErrorPage';
@@ -6,21 +7,13 @@ import { MovieContent } from './components/MovieContent';
 import { Grid } from '@mui/material';
 import { useFetch } from './hook/useFetch';
 import { useState } from 'react';
-interface MovieType {
-  Poster: string;
-  Title: string;
-  Type: string;
-  Year: string;
-  imdbID: string;
-}
+import { DataType } from './hook/useFetch';
 
 function App() {
   const [searchMovie, setSearchMovie] = useState<string | undefined>(
     'star wars'
   );
-  const [searchYear, setSearchYear] = useState<number[] | undefined>([
-    1800, 2024,
-  ]);
+  const [searchYear, setSearchYear] = useState<number | undefined>(2021);
   const [searchType, setSearchType] = useState<string>('movie');
   const [selectMovie, setSelectMovie] = useState<number>(0);
 
@@ -35,35 +28,19 @@ function App() {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>error</div>;
 
-  const id: MovieType = data && data[selectMovie];
+  const id = data?.Search && (data.Search[selectMovie].imdbID as string);
 
-  const handleSearchMovie = (value: string | undefined) => {
+  const handleSearchMovie = debounce((value: string | undefined) => {
     setSearchMovie(value);
-  };
+  }, 100);
 
-  const handleSearchYear = (value: number[]) => {
-    // eslint-disable-next-line prefer-const
-    let newArray = [];
-    const start = value.at(0);
-    const end = value.at(-1);
-
-    for (let i = start; i <= end; i++) {
-      newArray.push(i);
-    }
-    console.log(newArray);
-    setSearchYear(newArray);
-    return newArray;
+  const handleSearchYear = (value: number) => {
+    if (searchMovie) setSearchYear(value);
   };
 
   const handleSearchMovieType = (value: string) => {
     setSearchType(value);
   };
-
-  const handleMovieClick = (index: number) => {
-    setSelectMovie(index);
-  };
-
-  // Check if data exists before accessing Search property
 
   return (
     <Grid container>
@@ -77,15 +54,15 @@ function App() {
           onSearchYear={handleSearchYear}
         />
       </Grid>
-      <Grid item xs={5}>
+      <Grid item xs={4}>
         <MovieList
-          dataList={data}
+          dataList={data as DataType}
           selectMovie={selectMovie}
-          onSelectMovie={handleMovieClick}
+          onSelectMovie={(index: number) => setSelectMovie(index)}
         />
       </Grid>
-      <Grid item xs={7} sx={{ border: '2px solid blue' }}>
-        <MovieContent imdbID={id.imdbID} />
+      <Grid item xs={8}>
+        <MovieContent imdbID={id} />
       </Grid>
     </Grid>
   );

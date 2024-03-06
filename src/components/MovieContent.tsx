@@ -5,32 +5,15 @@ import { useFetchMovie } from '../hook/useFetchMovie';
 import { Fragment, useState } from 'react';
 
 interface IProp {
-  imdbID: string;
-}
-interface RatingType {
-  Ratings: [
-    {
-      Source: string;
-      Value: string;
-    }
-  ];
-}
-interface MovieType {
-  Poster: string;
-  Title: string;
-  Year: string;
-  Genre: string;
-  Ratings: RatingType;
-  Actors: string;
-  Plot: string;
+  imdbID?: string;
 }
 
 export const MovieContent = ({ imdbID }: IProp) => {
   const [watchlist, setWatchlist] = useState(false);
 
-  const { data } = useFetchMovie(imdbID);
+  const { data } = useFetchMovie(imdbID || '');
 
-  const { Title, Year, Poster, Plot, Genre, Actors, Ratings }: MovieType = data;
+  const { Title, Year, Poster, Plot, Genre, Actors, Ratings } = data;
 
   return (
     <Grid container sx={{ p: 4 }}>
@@ -88,12 +71,13 @@ export const MovieContent = ({ imdbID }: IProp) => {
           justifyContent="space-evenly"
           alignItems="center"
         >
-          {Ratings?.map((r: { Source: string; Value: string }, i: number) => {
+          {Ratings?.map((r, i: number) => {
+            const { Source, Value } = r;
             return (
               <Fragment key={i}>
                 <Grid item>
-                  <Typography textAlign="center">{r.Value}</Typography>
-                  <Typography>{r.Source}</Typography>
+                  <Typography textAlign="center">{Value}</Typography>
+                  <Typography>{Source}</Typography>
                 </Grid>
                 <Grid sx={{ borderLeft: '3px solid grey', height: ' 50px' }} />
               </Fragment>

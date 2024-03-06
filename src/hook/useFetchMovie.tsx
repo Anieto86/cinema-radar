@@ -1,8 +1,23 @@
 import { useCallback, useEffect, useState } from 'react';
 const key = import.meta.env.VITE_REACT_APP_OMDb_API_KEY;
 
+interface RatingType {
+  Source: string;
+  Value: string;
+}
+
+interface MovieType {
+  Poster: string;
+  Title: string;
+  Year: string;
+  Genre: string;
+  Ratings: RatingType[];
+  Actors: string;
+  Plot: string;
+}
+
 export const useFetchMovie = (id: string) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<MovieType>({} as MovieType);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<null | Error>(null);
 

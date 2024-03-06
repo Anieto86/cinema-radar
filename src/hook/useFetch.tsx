@@ -3,19 +3,29 @@ const key = import.meta.env.VITE_REACT_APP_OMDb_API_KEY;
 
 interface IMovie {
   name?: string;
-  year?: number[];
+  year?: number;
   type?: string;
-  // id?: string;
+}
+
+export interface DataType {
+  totalResults: string;
+  Response: string;
+  Search?: {
+    Title: string;
+    Year: string;
+    imdbID: string;
+    Type: string;
+    Poster: string;
+  }[];
 }
 
 export const useFetch = ({ name, year, type }: IMovie) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<DataType | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<null | Error>(null);
-
-  console.log(year);
+  const [error, setError] = useState<Error | null>(null);
 
   const fetchData = useCallback(async () => {
+    // setLoading(true);
     const URL = `http://www.omdbapi.com/?apikey=${key}`;
     // &y=${year} add later
     const searchParams = `&s=${name}&type=${type}`;
@@ -25,17 +35,18 @@ export const useFetch = ({ name, year, type }: IMovie) => {
       const response = await fetch(OMDbAPI);
       const responseJson = await response?.json();
 
-      // console.log(responseJson.Search);
+      // console.log(responseJson);
 
       if (responseJson.Search) {
-        setData(responseJson.Search);
+        setLoading(true);
+        setData(responseJson);
         setLoading(false);
       }
     } catch (error) {
       if (error instanceof Error) {
         setError(error);
+        setLoading(false);
       }
-      setLoading(false);
     } finally {
       setLoading(false);
     }

@@ -16,10 +16,10 @@ import SearchIcon from '@mui/icons-material/Search';
 interface IProp {
   searchMovie?: string;
   searchType?: string;
-  searchYear?: number[];
+  searchYear?: number;
   onSearchMovie: (searchMovie: string) => void;
   onSearchMovieType: (searchType: string) => void;
-  onSearchYear: (searchYear: string) => void;
+  onSearchYear: (searchYear: number) => void;
 }
 
 export const Header = ({
@@ -54,10 +54,10 @@ export const Header = ({
           <Grid item xs={3}>
             <Box sx={{ width: 300 }}>
               <Slider
-                value={searchYear ?? undefined}
-                min={2020}
+                value={searchYear}
+                min={1895}
                 max={2024}
-                onChange={(e, newValue) => onSearchYear(newValue as number[])}
+                onChange={(e) => onSearchYear(e.target.value)}
                 valueLabelDisplay="auto"
               />
             </Box>
