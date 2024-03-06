@@ -2,27 +2,35 @@ import { Button, Divider, Grid, Typography } from '@mui/material';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { useFetchMovie } from '../hook/useFetchMovie';
-import { useState } from 'react';
-
-const key = import.meta.env.VITE_REACT_APP_OMDb_API_KEY;
+import { Fragment, useState } from 'react';
 
 interface IProp {
-  imdbID?: string;
+  imdbID: string;
+}
+interface RatingType {
+  Ratings: [
+    {
+      Source: string;
+      Value: string;
+    }
+  ];
+}
+interface MovieType {
+  Poster: string;
+  Title: string;
+  Year: string;
+  Genre: string;
+  Ratings: RatingType;
+  Actors: string;
+  Plot: string;
 }
 
 export const MovieContent = ({ imdbID }: IProp) => {
   const [watchlist, setWatchlist] = useState(false);
-  console.log(imdbID);
 
-  const OMDbAPIbyID = `http://www.omdbapi.com/?apikey=${key}&i=${
-    imdbID ?? null
-  }`;
+  const { data } = useFetchMovie(imdbID);
 
-  const { data } = useFetchMovie(OMDbAPIbyID);
-
-  const { Title, Year, Poster, Plot, Genre, Actors, Ratings } = data;
-
-  console.log(Title);
+  const { Title, Year, Poster, Plot, Genre, Actors, Ratings }: MovieType = data;
 
   return (
     <Grid container sx={{ p: 4 }}>
@@ -80,19 +88,15 @@ export const MovieContent = ({ imdbID }: IProp) => {
           justifyContent="space-evenly"
           alignItems="center"
         >
-          <Divider
-            sx={{
-              border: '1px solid red',
-            }}
-            orientation="vertical"
-            flexItem
-          />
           {Ratings?.map((r: { Source: string; Value: string }, i: number) => {
             return (
-              <Grid item key={i}>
-                <Typography textAlign="center">{r.Value}</Typography>\
-                <Typography>{r.Source}</Typography>
-              </Grid>
+              <Fragment key={i}>
+                <Grid item>
+                  <Typography textAlign="center">{r.Value}</Typography>
+                  <Typography>{r.Source}</Typography>
+                </Grid>
+                <Grid sx={{ borderLeft: '3px solid grey', height: ' 50px' }} />
+              </Fragment>
             );
           })}
         </Grid>

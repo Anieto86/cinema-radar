@@ -1,26 +1,31 @@
 import { useCallback, useEffect, useState } from 'react';
 const key = import.meta.env.VITE_REACT_APP_OMDb_API_KEY;
 
-export const useFetch = (name?: string, year?: string, type?: string) => {
+interface IMovie {
+  name?: string;
+  year?: number[];
+  type?: string;
+  // id?: string;
+}
+
+export const useFetch = ({ name, year, type }: IMovie) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<null | Error>(null);
 
+  console.log(year);
+
   const fetchData = useCallback(async () => {
-    // setLoading(true);
-    // const OMDbAPI = `http://www.omdbapi.com/?s=${name}&apikey=${key}&type=${type}&y=${year}`;
-
-    const OMDbAPI = `http://www.omdbapi.com/?apikey=${key}&s=${name}&type=${type}&y=${year}`;
-
-    // const OMDbAPIbyID = `http://www.omdbapi.com/?apikey=${key}&i=${
-    //   imdbID ?? null
-    // }`;
+    const URL = `http://www.omdbapi.com/?apikey=${key}`;
+    // &y=${year} add later
+    const searchParams = `&s=${name}&type=${type}`;
+    const OMDbAPI = `${URL}${searchParams}`;
 
     try {
       const response = await fetch(OMDbAPI);
       const responseJson = await response?.json();
 
-      console.log(responseJson.Search);
+      // console.log(responseJson.Search);
 
       if (responseJson.Search) {
         setData(responseJson.Search);
@@ -34,11 +39,11 @@ export const useFetch = (name?: string, year?: string, type?: string) => {
     } finally {
       setLoading(false);
     }
-  }, [name, year, type]);
+  }, [name, type]);
 
   useEffect(() => {
     fetchData();
-  }, [fetchData]);
+  }, [fetchData, name, year, type]);
 
   return { data, loading, error };
 };

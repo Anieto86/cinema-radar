@@ -24,7 +24,6 @@ export const MovieList = ({ dataList, selectMovie, onSelectMovie }: IProp) => {
     <Box sx={{ display: 'flex', border: 'solid 1px red', overflowY: 'scroll' }}>
       <List>
         {dataList?.map((m, i: number) => {
-          console.log(m.Title);
           return (
             <ListItem key={m.imdbID}>
               <ListItemButton
