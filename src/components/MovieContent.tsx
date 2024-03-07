@@ -78,10 +78,10 @@ export const MovieContent = ({ imdbID }: IProp) => {
       >
         <Grid item xs={12} sx={{ my: 4 }}>
           <Divider />
-          <Typography textAlign="center" variant="h5">
+          <Typography textAlign="center" variant="h5" sx={{ p: 4 }}>
             {Plot}
           </Typography>
-          <Divider />
+          <Divider sx={{ borderLeft: '2px solid grey' }} />
         </Grid>
 
         <Grid
@@ -95,10 +95,16 @@ export const MovieContent = ({ imdbID }: IProp) => {
             return (
               <Fragment key={i}>
                 <Grid item>
-                  <Typography textAlign="center">{Value}</Typography>
+                  <Typography textAlign="center" variant="h6" sx={{ mb: 1 }}>
+                    {Value}
+                  </Typography>
                   <Typography>{Source}</Typography>
                 </Grid>
-                <Grid sx={{ borderLeft: '3px solid grey', height: ' 50px' }} />
+                {i < Ratings.length - 1 && (
+                  <Grid
+                    sx={{ borderLeft: '2px solid grey', height: ' 60px' }}
+                  />
+                )}
               </Fragment>
             );
           })}

@@ -8,26 +8,27 @@ import {
   Radio,
   RadioGroup,
   Slider,
-  Box,
+  Typography,
+  Stack,
 } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 
 interface IProp {
-  searchMovie?: string;
-  searchType?: string;
-  searchYear?: number;
+  movie?: string;
+  type?: string;
+  year?: number;
   onSearchMovie: (searchMovie: string) => void;
   onSearchMovieType: (searchType: string) => void;
   onSearchYear: (searchYear: number) => void;
 }
 
 export const Header = ({
-  searchMovie,
+  movie,
+  type,
+  year,
   onSearchMovie,
-  searchType,
   onSearchMovieType,
-  searchYear,
   onSearchYear,
 }: IProp) => {
   return (
@@ -39,30 +40,48 @@ export const Header = ({
           justifyContent="space-between"
           alignItems="center"
           wrap="nowrap"
-          sx={{ p: 1, mt: 2 }}
+          sx={{ p: 1, mt: 2, border: '1px solid #000000' }}
         >
-          <Grid item xs={6}>
+          <Grid item xs={5} sx={{ p: 1 }}>
             <TextField
               id="search-movie"
               InputProps={{
-                startAdornment: <SearchIcon />,
+                startAdornment: (
+                  <SearchIcon color="primary" sx={{ fontSize: 50, mr: 2 }} />
+                ),
               }}
-              value={searchMovie ?? null}
+              value={movie ?? null}
               onChange={(e) => onSearchMovie(e.target.value)}
             />
           </Grid>
-          <Grid item xs={3}>
-            <Box sx={{ width: 300 }}>
+          <Grid item xs={2} sx={{ border: '1px solid #ff0505' }}>
+            <Typography>YEAR</Typography>
+            <Stack
+              spacing={3}
+              direction="row"
+              sx={{ mb: 1 }}
+              alignItems="center"
+            >
               <Slider
-                value={searchYear}
+                value={year}
                 min={1895}
                 max={2024}
-                onChange={(e) => onSearchYear(e.target.value)}
-                valueLabelDisplay="auto"
-              />
-            </Box>
+                onChange={(event, newValue) => onSearchYear(newValue)}
+                // valueLabelDisplay="auto"
+              />{' '}
+              <Typography>{year}</Typography>
+            </Stack>
           </Grid>
-          <Grid item xs={3}>
+
+          <Grid
+            item
+            xs={4}
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              border: '1px solid #000000',
+            }}
+          >
             <FormControl>
               <FormLabel id="demo-row-radio-buttons-group-label">
                 TYPE
@@ -71,7 +90,7 @@ export const Header = ({
                 row
                 aria-labelledby="demo-controlled-radio-buttons-group"
                 name="controlled-radio-buttons-group"
-                value={searchType}
+                value={type}
                 onChange={(e) => onSearchMovieType(e.target.value)}
               >
                 <FormControlLabel value={''} control={<Radio />} label="Any" />

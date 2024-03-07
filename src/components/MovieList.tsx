@@ -6,8 +6,8 @@ import {
   ListItemButton,
   Typography,
 } from '@mui/material';
-import { Fragment } from 'react/jsx-runtime';
 import { DataType } from '../hook/useFetch';
+import { Fragment } from 'react/jsx-runtime';
 
 interface IProp {
   selectMovie: number;
@@ -23,44 +23,53 @@ export const MovieList = ({ dataList, selectMovie, onSelectMovie }: IProp) => {
         borderRight: 'solid 1px grey',
         overflowY: 'scroll',
         scrollbarWidth: 'thin',
-        scrollbarColor: 'rgba(243, 20, 20, 0.6) ',
-        scrollbarTrackColor: 'rgba(0, 0, 0, 0.5)',
+        // scrollbarColor: 'rgba(243, 20, 20, 0.6) ',
+        // scrollbarTrackColor: 'rgba(0, 0, 0, 0.5)',
       }}
     >
       <Grid item xs={12} sx={{ m: 5 }}>
-        <Typography>{totalResults} RESULTS</Typography>
+        <Typography variant="h6">{totalResults} RESULTS</Typography>
       </Grid>
-      <Grid item xs={12}>
-        <List sx={{ my: 2 }}>
-          {Search?.map((m, i: number) => {
-            return (
-              <Fragment key={m.imdbID}>
-                <Divider />
-                <ListItem sx={{ my: 2 }}>
-                  <ListItemButton
-                    selected={selectMovie === i}
-                    onClick={() => onSelectMovie(i)}
-                  >
-                    <img
-                      src={m.Poster}
-                      alt="movies-poster"
-                      style={{
-                        width: '80px',
-                        height: '80px',
-                        objectFit: 'cover',
-                        borderRadius: '5px',
-                      }}
-                    />
 
-                    <Typography sx={{ color: 'black' }}>{m.Title}</Typography>
-                    <Typography>{m.Year}</Typography>
-                  </ListItemButton>
+      <List sx={{ my: 2 }}>
+        {Search?.map((m, i: number) => {
+          return (
+            <Fragment key={m.imdbID}>
+              {i !== 0 && (
+                <Grid item xs={12}>
+                  <Divider />
+                </Grid>
+              )}
+              <ListItemButton
+                selected={selectMovie === i}
+                onClick={() => onSelectMovie(i)}
+              >
+                <ListItem>
+                  <img
+                    src={m.Poster}
+                    alt="movies-poster"
+                    style={{
+                      marginRight: '12px',
+                      width: '80px',
+                      height: '80px',
+                      objectFit: 'cover',
+                      borderRadius: '5px',
+                    }}
+                  />
+                  <Grid container spacing={1}>
+                    <Grid item xs={12}>
+                      <Typography variant="h6">{m.Title}</Typography>
+                    </Grid>
+                    <Grid item>
+                      <Typography>{m.Year}</Typography>
+                    </Grid>
+                  </Grid>
                 </ListItem>
-              </Fragment>
-            );
-          })}
-        </List>
-      </Grid>
+              </ListItemButton>
+            </Fragment>
+          );
+        })}
+      </List>
     </Grid>
   );
 };

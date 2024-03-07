@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 const key = import.meta.env.VITE_REACT_APP_OMDb_API_KEY;
 
-interface IMovie {
+interface IProp {
   name?: string;
   year?: number;
   type?: string;
@@ -19,7 +19,7 @@ export interface DataType {
   }[];
 }
 
-export const useFetch = ({ name, year, type }: IMovie) => {
+export const useFetch = ({ name, year, type }: IProp) => {
   const [data, setData] = useState<DataType | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);

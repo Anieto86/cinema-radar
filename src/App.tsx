@@ -10,17 +10,15 @@ import { useState } from 'react';
 import { DataType } from './hook/useFetch';
 
 function App() {
-  const [searchMovie, setSearchMovie] = useState<string | undefined>(
-    'star wars'
-  );
-  const [searchYear, setSearchYear] = useState<number | undefined>(2021);
-  const [searchType, setSearchType] = useState<string>('movie');
+  const [movie, setMovie] = useState<string | undefined>('star wars');
+  const [year, setYear] = useState<number | undefined>(2021);
+  const [type, setType] = useState<string>('movie');
   const [selectMovie, setSelectMovie] = useState<number>(0);
 
   const params = {
-    name: searchMovie,
-    type: searchType,
-    year: searchYear,
+    name: movie,
+    type: type,
+    year: year,
   };
 
   const { data, loading, error } = useFetch({ ...params });
@@ -31,26 +29,28 @@ function App() {
   const id = data?.Search && (data.Search[selectMovie].imdbID as string);
 
   const handleSearchMovie = debounce((value: string | undefined) => {
-    setSearchMovie(value);
+    setMovie(value);
   }, 100);
 
-  const handleSearchYear = (value: number) => {
-    if (searchMovie) setSearchYear(value);
-  };
+  const handleSearchYear = debounce((value: number) => {
+    setYear(value);
+  }, 500);
 
   const handleSearchMovieType = (value: string) => {
-    setSearchType(value);
+    if (movie) setType(value);
   };
+
+  console.log(year);
 
   return (
     <Grid container>
       <Grid item xs={12}>
         <Header
-          searchMovie={searchMovie}
+          movie={movie}
           onSearchMovie={handleSearchMovie}
-          searchType={searchType}
+          type={type}
           onSearchMovieType={handleSearchMovieType}
-          searchYear={searchYear}
+          year={year}
           onSearchYear={handleSearchYear}
         />
       </Grid>
