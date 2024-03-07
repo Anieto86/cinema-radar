@@ -16,57 +16,44 @@ export const MovieContent = ({ imdbID }: IProp) => {
   const { Title, Year, Poster, Plot, Genre, Actors, Ratings } = data;
 
   return (
-    <Grid container sx={{ p: 3 }}>
+    <>
       <Grid
         container
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-        sx={{ outline: '1px solid grey' }}
+        display="flex"
+        // justifyContent="flex-end"
+        alignItems="flex-end"
+        spacing={2}
+        sx={{ outline: '1px solid pink' }}
       >
-        <Grid item xs={3} sx={{ mt: 2 }}>
+        <Grid item sx={{ mt: 2 }}>
           <img
             src={Poster}
             alt="movies-poster"
             style={{ borderRadius: '5px' }}
           />
         </Grid>
-
-        <Grid item xs={9}>
-          <Grid
-            container
-            display="flex"
-            justifyContent="flex-end"
-            alignItems="flex-end"
-            sx={{ outline: '1px solid pink' }}
-            spacing={2}
+        <Grid item>
+          <Button
+            sx={{ border: '1px solid black', p: 2, color: 'black' }}
+            onClick={() => {
+              setWatchlist((watchlist) => !watchlist);
+            }}
+            startIcon={watchlist ? <BookmarkIcon /> : <BookmarkBorderIcon />}
           >
-            <Grid item sx={{ mb: 6 }}>
-              <Button
-                sx={{ border: '1px solid black', p: 2, color: 'black' }}
-                onClick={() => {
-                  setWatchlist((watchlist) => !watchlist);
-                }}
-                startIcon={
-                  watchlist ? <BookmarkIcon /> : <BookmarkBorderIcon />
-                }
-              >
-                Watchlist
-              </Button>
-            </Grid>
+            Watchlist
+          </Button>
+        </Grid>
 
-            <Grid item xs={12}>
-              <Typography variant="h2" sx={{ border: '1px solid green', p: 2 }}>
-                {Title}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant="h5">
-                icon {Year} {Genre}
-              </Typography>
-              <Typography variant="h5">{Actors}</Typography>
-            </Grid>
-          </Grid>
+        <Grid item xs={12} md={12}>
+          <Typography variant="h2" sx={{ border: '1px solid green', p: 2 }}>
+            {Title}
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h5">
+            icon {Year} {Genre}
+          </Typography>
+          <Typography variant="h5">{Actors}</Typography>
         </Grid>
       </Grid>
 
@@ -110,6 +97,6 @@ export const MovieContent = ({ imdbID }: IProp) => {
           })}
         </Grid>
       </Grid>
-    </Grid>
+    </>
   );
 };

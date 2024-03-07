@@ -18,10 +18,10 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           '& label': {
-            color: 'white',
+            color: '#fefefe',
           },
           '& .MuiInputBase-input': {
-            color: 'white',
+            color: '#fefefe',
             fontSize: '30px',
           },
           '& .MuiOutlinedInput-root': {
@@ -38,5 +38,20 @@ export const theme = createTheme({
         },
       },
     },
+    // MuiFormControlLabel: {
+    //   // Estilos para el label del radio
+    //   styleOverrides: {
+    //     label: {
+    //       color: '#fefefe', // Color blanco para el label del radio
+    //     },
+    //   },
+    // },
+    // MuiRadio: {
+    //   styleOverrides: {
+    //     root: {
+    //       color: 'white', // Color del icono del radio
+    //     },
+    //   },
+    // },
   },
 });
