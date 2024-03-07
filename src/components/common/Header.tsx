@@ -36,7 +36,7 @@ export const Header = ({
   const primary = theme.palette.primary.main;
 
   return (
-    <AppBar position="static" sx={{ bgcolor: '#666666', height: '120px' }}>
+    <AppBar position="static" sx={{ bgcolor: '#666666', height: '130px' }}>
       <Toolbar>
         <Grid
           container
@@ -44,7 +44,7 @@ export const Header = ({
           justifyContent="space-between"
           alignItems="center"
           wrap="nowrap"
-          sx={{ p: 1, mt: 1, border: '1px solid #000000' }}
+          sx={{ p: 1, mt: 1 }}
         >
           <Grid item xs={4} sx={{ border: '1px solid #ff0505' }}>
             <TextField
@@ -67,20 +67,23 @@ export const Header = ({
               alignItems="center"
             >
               <Slider
-                value={year}
+                value={year as number}
                 min={1895}
                 max={2024}
-                onChange={(event, newValue) => onSearchYear(newValue)}
+                onChange={(_event, newValue) =>
+                  onSearchYear(newValue as number)
+                }
                 valueLabelDisplay="auto"
-              />{' '}
+                sx={{ height: '30%' }}
+              />
               <Typography color="primary">{year}</Typography>
             </Stack>
           </Grid>
 
           <Grid
             item
-            xs={4}
-            md={6}
+            xs={3}
+            // md={6}
             sx={{
               display: 'flex',
               justifyContent: 'flex-end',

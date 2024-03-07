@@ -26,13 +26,13 @@ export const theme = createTheme({
           },
           '& .MuiOutlinedInput-root': {
             '& fieldset': {
-              borderColor: 'transparent', // Borde transparente
+              borderColor: 'transparent',
             },
             '&:hover fieldset': {
-              borderColor: 'transparent', // Borde transparente al pasar el mouse
+              borderColor: 'transparent',
             },
             '&.Mui-focused fieldset': {
-              borderColor: 'transparent', // Borde transparente cuando está enfocado
+              borderColor: 'transparent',
             },
           },
         },

@@ -14,6 +14,8 @@ interface MovieType {
   Ratings: RatingType[];
   Actors: string;
   Plot: string;
+  Rated: string;
+  Runtime: string;
 }
 
 export const useFetchMovie = (id: string) => {

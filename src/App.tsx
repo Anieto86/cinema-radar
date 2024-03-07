@@ -34,13 +34,11 @@ function App() {
 
   const handleSearchYear = debounce((value: number) => {
     setYear(value);
-  }, 500);
+  }, 200);
 
   const handleSearchMovieType = (value: string) => {
     if (movie) setType(value);
   };
-
-  console.log(year);
 
   return (
     <Grid container>

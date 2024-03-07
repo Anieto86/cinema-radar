@@ -33,6 +33,7 @@ export const MovieList = ({ dataList, selectMovie, onSelectMovie }: IProp) => {
 
       <List sx={{ my: 2 }}>
         {Search?.map((m, i: number) => {
+          console.log(selectMovie === i);
           return (
             <Fragment key={m.imdbID}>
               {i !== 0 && (
@@ -43,6 +44,14 @@ export const MovieList = ({ dataList, selectMovie, onSelectMovie }: IProp) => {
               <ListItemButton
                 selected={selectMovie === i}
                 onClick={() => onSelectMovie(i)}
+                sx={{
+                  '&:hover': {
+                    bgcolor: '#ebebeb',
+                  },
+                  py: 5,
+                  backgroundColor:
+                    selectMovie !== i ? 'transparent' : '#ebebeb',
+                }}
               >
                 <ListItem>
                   <img
@@ -56,12 +65,12 @@ export const MovieList = ({ dataList, selectMovie, onSelectMovie }: IProp) => {
                       borderRadius: '5px',
                     }}
                   />
-                  <Grid container spacing={1}>
+                  <Grid container spacing={1} ml={2}>
                     <Grid item xs={12}>
-                      <Typography variant="h6">{m.Title}</Typography>
+                      <Typography variant="h5">{m.Title}</Typography>
                     </Grid>
                     <Grid item>
-                      <Typography>{m.Year}</Typography>
+                      <Typography variant="h6">{m.Year}</Typography>
                     </Grid>
                   </Grid>
                 </ListItem>

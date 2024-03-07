@@ -10,48 +10,68 @@ interface IProp {
 
 export const MovieContent = ({ imdbID }: IProp) => {
   const [watchlist, setWatchlist] = useState(false);
-
   const { data } = useFetchMovie(imdbID || '');
-
-  const { Title, Year, Poster, Plot, Genre, Actors, Ratings } = data;
+  const { Title, Year, Poster, Plot, Genre, Actors, Ratings, Rated, Runtime } =
+    data;
 
   return (
     <>
       <Grid
         container
         display="flex"
-        // justifyContent="flex-end"
-        alignItems="flex-end"
-        spacing={2}
-        sx={{ outline: '1px solid pink' }}
+        justifyContent="space-evenly"
+        alignItems="center"
+        sx={{
+          outline: '1px solid red',
+          mt: 2,
+        }}
       >
-        <Grid item sx={{ mt: 2 }}>
+        <Grid
+          item
+          xs={3}
+          sx={{
+            p: 2,
+          }}
+        >
           <img
             src={Poster}
             alt="movies-poster"
-            style={{ borderRadius: '5px' }}
+            style={{
+              borderRadius: '5px',
+              objectFit: 'contain',
+              width: '100%',
+              height: 'auto',
+            }}
           />
         </Grid>
-        <Grid item>
-          <Button
-            sx={{ border: '1px solid black', p: 2, color: 'black' }}
-            onClick={() => {
-              setWatchlist((watchlist) => !watchlist);
-            }}
-            startIcon={watchlist ? <BookmarkIcon /> : <BookmarkBorderIcon />}
-          >
-            Watchlist
-          </Button>
-        </Grid>
 
-        <Grid item xs={12} md={12}>
-          <Typography variant="h2" sx={{ border: '1px solid green', p: 2 }}>
+        <Grid item xs={9} sx={{ border: '1px solid green' }}>
+          <Grid
+            container
+            display="flex"
+            justifyContent="flex-end"
+            alignItems="flex-end"
+            sx={{ outline: '1px solid black' }}
+          >
+            <Grid item sx={{ border: '1px solid black', mb: 5 }}>
+              <Button
+                sx={{ p: 2, color: 'black' }}
+                onClick={() => {
+                  setWatchlist((watchlist) => !watchlist);
+                }}
+                startIcon={
+                  watchlist ? <BookmarkIcon /> : <BookmarkBorderIcon />
+                }
+              >
+                Watchlist
+              </Button>
+            </Grid>
+          </Grid>
+          <Typography variant="h2" fontWeight={600} sx={{ my: 10 }}>
             {Title}
           </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h5">
-            icon {Year} {Genre}
+          <Typography variant="h5" sx={{ my: 3 }}>
+            {`${Rated} ${Year} \u00B7 ${Genre} \u00B7 ${Runtime}`}
           </Typography>
           <Typography variant="h5">{Actors}</Typography>
         </Grid>
@@ -62,6 +82,7 @@ export const MovieContent = ({ imdbID }: IProp) => {
         direction="row"
         justifyContent="center"
         alignItems="center"
+        sx={{ p: 4 }}
       >
         <Grid item xs={12} sx={{ my: 4 }}>
           <Divider />
