@@ -74,9 +74,8 @@ export const Header = ({
               <Slider
                 value={year}
                 // onChange={(newValue) => onSearchYear(newValue)}
-                min={2000}
-                max={2005}
-                // getAriaLabel={() => 'Temperature range'}
+                min={1980}
+                max={2024} // getAriaLabel={() => 'Temperature range'}
                 onChange={onSearchYear}
                 valueLabelDisplay="auto"
                 getAriaValueText={valuetext}

@@ -6,33 +6,42 @@ import {
   ListItemButton,
   Typography,
 } from '@mui/material';
-import { DataType } from '../hook/useFetch';
+import { SearchResult } from '../hook/useFetch';
 import { Fragment } from 'react/jsx-runtime';
 
 interface IProp {
   selectMovie: number;
-  dataList: DataType;
+  dataList: SearchResult[];
   onSelectMovie: (i: number) => void;
 }
 
 export const MovieList = ({ dataList, selectMovie, onSelectMovie }: IProp) => {
-  const { Search, totalResults } = dataList;
+  const totalResult = dataList
+    .map((result) => result.totalResults)
+    .reduce((total, current) => total + parseInt(current), 0);
+
+  const movies = dataList
+    .map((result) => result.Search)
+    .flat()
+    .map((s) => s);
+
+  // console.log(movies);
+
   return (
     <Grid
       sx={{
         borderRight: 'solid 1px grey',
         overflowY: 'scroll',
         scrollbarWidth: 'thin',
-        // scrollbarColor: 'rgba(243, 20, 20, 0.6) ',
-        // scrollbarTrackColor: 'rgba(0, 0, 0, 0.5)',
+        scrollbarColor: '#ebebeb',
       }}
     >
       <Grid item xs={12} sx={{ m: 5 }}>
-        <Typography variant="h6">{totalResults} RESULTS</Typography>
+        <Typography variant="h6">{totalResult} RESULTS</Typography>
       </Grid>
 
       <List sx={{ my: 2 }}>
-        {Search?.map((m, i: number) => {
+        {movies?.map((m, i: number) => {
           return (
             <Fragment key={m.imdbID}>
               {i !== 0 && (

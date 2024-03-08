@@ -7,11 +7,11 @@ import { MovieContent } from './components/MovieContent';
 import { Grid } from '@mui/material';
 import { useFetch } from './hook/useFetch';
 import { useState } from 'react';
-import { DataType } from './hook/useFetch';
+import { SearchResult } from './hook/useFetch';
 
 function App() {
   const [movie, setMovie] = useState<string | undefined>('star wars');
-  const [year, setYear] = useState<number[]>([20, 25]);
+  const [year, setYear] = useState<number[]>([2000, 2001]);
   const [type, setType] = useState<string>('movie');
   const [selectMovie, setSelectMovie] = useState<number>(0);
 
@@ -56,7 +56,7 @@ function App() {
       </Grid>
       <Grid item xs={4}>
         <MovieList
-          dataList={data as DataType}
+          dataList={data as SearchResult}
           selectMovie={selectMovie}
           onSelectMovie={(index: number) => setSelectMovie(index)}
         />
