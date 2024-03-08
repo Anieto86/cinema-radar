@@ -21,7 +21,7 @@ interface IProp {
   year?: number[];
   onSearchMovie: (searchMovie: string) => void;
   onSearchMovieType: (searchType: string) => void;
-  onSearchYear: (searchYear: number) => void;
+  onSearchYear: (event: Event | null, newValue: number[]) => void;
 }
 
 export const Header = ({
@@ -34,10 +34,6 @@ export const Header = ({
 }: IProp) => {
   const theme = useTheme();
   const primary = theme.palette.primary.main;
-
-  function valuetext(value: number) {
-    return `${value}°C`;
-  }
 
   return (
     <AppBar position="static" sx={{ bgcolor: '#666666', height: '130px' }}>
@@ -73,12 +69,12 @@ export const Header = ({
               <Typography color="primary">{year?.at(0)?.toString()}</Typography>
               <Slider
                 value={year}
-                // onChange={(newValue) => onSearchYear(newValue)}
                 min={1980}
-                max={2024} // getAriaLabel={() => 'Temperature range'}
-                onChange={onSearchYear}
+                max={2024}
+                onChange={(_event, newValue) =>
+                  onSearchYear(null, newValue as number[])
+                }
                 valueLabelDisplay="auto"
-                getAriaValueText={valuetext}
                 sx={{ height: '30%' }}
               />
               <Typography color="primary">{year?.at(1)?.toString()}</Typography>
@@ -88,7 +84,6 @@ export const Header = ({
           <Grid
             item
             xs={3}
-            // md={6}
             sx={{
               display: 'flex',
               justifyContent: 'flex-end',
@@ -106,7 +101,6 @@ export const Header = ({
                 row
                 aria-labelledby="demo-controlled-radio-buttons-group"
                 name="controlled-radio-buttons-group"
-                // sx={{ flexWrap: 'nowrap' }}
                 value={type}
                 onChange={(e) => onSearchMovieType(e.target.value)}
               >

@@ -7,14 +7,13 @@ import { MovieContent } from './components/MovieContent';
 import { Grid } from '@mui/material';
 import { useFetch } from './hook/useFetch';
 import { useState } from 'react';
-import { SearchResult } from './hook/useFetch';
+import { Search } from './hook/useFetch';
 
 function App() {
   const [movie, setMovie] = useState<string | undefined>('star wars');
-  const [year, setYear] = useState<number[]>([2000, 2001]);
+  const [year, setYear] = useState<number[]>([1980, 2001]);
   const [type, setType] = useState<string>('movie');
   const [selectMovie, setSelectMovie] = useState<number>(0);
-
   const params = {
     name: movie,
     type,
@@ -23,16 +22,22 @@ function App() {
 
   const { data, loading, error } = useFetch({ ...params });
 
+  const movies = data?.flatMap((result) => result.Search || []);
+
+  const movieId = movies?.map((result) => result.imdbID)[selectMovie] as string;
+
+  const totalResult = data
+    ?.map((result) => result.totalResults)
+    .reduce((total, current) => total + parseInt(current), 0);
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>error</div>;
-
-  const id = data?.Search && (data.Search[selectMovie].imdbID as string);
 
   const handleSearchMovie = debounce((value: string | undefined) => {
     setMovie(value);
   }, 100);
 
-  const handleSearchYear = (_event: Event, newValue: number[]) => {
+  const handleSearchYear = (_event: Event | null, newValue: number[]) => {
     setYear(newValue as number[]);
   };
 
@@ -49,20 +54,21 @@ function App() {
           type={type}
           onSearchMovieType={handleSearchMovieType}
           year={year}
-          onSearchYear={(_e: Event, newValue: number[]) =>
-            handleSearchYear(_e, newValue)
-          }
+          onSearchYear={(_e, newValue) => handleSearchYear(_e, newValue)}
         />
       </Grid>
       <Grid item xs={4}>
         <MovieList
-          dataList={data as SearchResult}
+          movies={movies as Search[]}
+          totalResult={totalResult as number}
           selectMovie={selectMovie}
           onSelectMovie={(index: number) => setSelectMovie(index)}
+          onSearchMovie={handleSearchMovie}
+          onSearchYear={(_e, newValue) => handleSearchYear(_e, newValue)}
         />
       </Grid>
       <Grid item xs={8}>
-        <MovieContent imdbID={id} />
+        <MovieContent imdbID={movieId} />
       </Grid>
     </Grid>
   );

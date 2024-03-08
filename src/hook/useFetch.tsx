@@ -6,7 +6,7 @@ interface IProp {
   year: number[];
   type?: string;
 }
-interface Movie {
+export interface Search {
   Title: string;
   Year: string;
   imdbID: string;
@@ -15,13 +15,13 @@ interface Movie {
 }
 
 export interface SearchResult {
-  Search: Movie[];
+  Search: Search[];
   totalResults: string;
   Response: string;
 }
 
 export const useFetch = ({ name, year, type }: IProp) => {
-  const [data, setData] = useState<SearchResult | null>(null);
+  const [data, setData] = useState<SearchResult[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
@@ -39,10 +39,10 @@ export const useFetch = ({ name, year, type }: IProp) => {
 
   const fetchData = useCallback(async () => {
     // setLoading(true);
-    const URL = `http://www.omdbapi.com/?apikey=${key}`;
-    const yearRange = intermediateValues(year);
 
     try {
+      const URL = `http://www.omdbapi.com/?apikey=${key}`;
+      const yearRange = intermediateValues(year);
       const requests = yearRange.map(async (year) => {
         const response = await fetch(`${URL}&s=${name}&type=${type}&y=${year}`);
         if (!response.ok) {
@@ -52,16 +52,15 @@ export const useFetch = ({ name, year, type }: IProp) => {
       });
 
       const results = await Promise.allSettled(requests);
+
       const searchData = results
         .filter(
-          (result): result is PromiseFulfilledResult<unknown> =>
+          (result): result is PromiseFulfilledResult<SearchResult> =>
             result.status === 'fulfilled' && result.value && result.value.Search
         )
         .map((result) => result.value);
 
-      console.log(searchData);
-
-      setData(searchData as unknown as SearchResult);
+      setData(searchData as SearchResult[]);
     } catch (error) {
       setError(error as Error | null);
       setLoading(false);

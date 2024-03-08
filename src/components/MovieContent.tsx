@@ -1,6 +1,7 @@
 import { Button, Divider, Grid, Typography } from '@mui/material';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
+import HideImageOutlinedIcon from '@mui/icons-material/HideImageOutlined';
 import { useFetchMovie } from '../hook/useFetchMovie';
 import { Fragment, useState } from 'react';
 
@@ -33,16 +34,20 @@ export const MovieContent = ({ imdbID }: IProp) => {
             p: 2,
           }}
         >
-          <img
-            src={Poster}
-            alt="movies-poster"
-            style={{
-              borderRadius: '5px',
-              objectFit: 'contain',
-              width: '100%',
-              height: 'auto',
-            }}
-          />
+          {Poster !== 'N/A' ? (
+            <img
+              src={Poster}
+              alt="movies-poster"
+              style={{
+                borderRadius: '5px',
+                objectFit: 'contain',
+                width: '100%',
+                height: 'auto',
+              }}
+            />
+          ) : (
+            <HideImageOutlinedIcon sx={{ fontSize: '95px' }} />
+          )}
         </Grid>
 
         <Grid item xs={9} sx={{ border: '1px solid green' }}>
