@@ -40,6 +40,8 @@ function App() {
     if (movie) setType(value);
   };
 
+  console.log(data);
+
   return (
     <Grid container>
       <Grid item xs={12}>

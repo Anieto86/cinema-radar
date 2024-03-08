@@ -70,7 +70,14 @@ export const MovieContent = ({ imdbID }: IProp) => {
           <Typography variant="h2" fontWeight={600} sx={{ my: 10 }}>
             {Title}
           </Typography>
-          <Typography variant="h5" sx={{ my: 3 }}>
+          <Typography
+            variant="h5"
+            sx={{
+              my: 3,
+              border: '1px solid black',
+              padding: '10px',
+            }}
+          >
             {`${Rated} ${Year} \u00B7 ${Genre} \u00B7 ${Runtime}`}
           </Typography>
           <Typography variant="h5">{Actors}</Typography>

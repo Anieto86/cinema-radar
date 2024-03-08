@@ -32,13 +32,13 @@ export const useFetch = ({ name, year, type }: IProp) => {
     const OMDbAPI = `${URL}${searchParams}`;
 
     try {
+      setLoading(true);
       const response = await fetch(OMDbAPI);
       const responseJson = await response?.json();
 
       // console.log(responseJson);
 
       if (responseJson.Search) {
-        setLoading(true);
         setData(responseJson);
         setLoading(false);
       }
