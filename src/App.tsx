@@ -11,14 +11,14 @@ import { DataType } from './hook/useFetch';
 
 function App() {
   const [movie, setMovie] = useState<string | undefined>('star wars');
-  const [year, setYear] = useState<number | undefined>(2021);
+  const [year, setYear] = useState<number[]>([20, 25]);
   const [type, setType] = useState<string>('movie');
   const [selectMovie, setSelectMovie] = useState<number>(0);
 
   const params = {
     name: movie,
-    type: type,
-    year: year,
+    type,
+    year,
   };
 
   const { data, loading, error } = useFetch({ ...params });
@@ -32,15 +32,13 @@ function App() {
     setMovie(value);
   }, 100);
 
-  const handleSearchYear = debounce((value: number) => {
-    setYear(value);
-  }, 200);
+  const handleSearchYear = (_event: Event, newValue: number[]) => {
+    setYear(newValue as number[]);
+  };
 
   const handleSearchMovieType = (value: string) => {
     if (movie) setType(value);
   };
-
-  console.log(data);
 
   return (
     <Grid container>
@@ -51,7 +49,9 @@ function App() {
           type={type}
           onSearchMovieType={handleSearchMovieType}
           year={year}
-          onSearchYear={handleSearchYear}
+          onSearchYear={(_e: Event, newValue: number[]) =>
+            handleSearchYear(_e, newValue)
+          }
         />
       </Grid>
       <Grid item xs={4}>

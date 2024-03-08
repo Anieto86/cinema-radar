@@ -33,7 +33,6 @@ export const MovieList = ({ dataList, selectMovie, onSelectMovie }: IProp) => {
 
       <List sx={{ my: 2 }}>
         {Search?.map((m, i: number) => {
-          console.log(selectMovie === i);
           return (
             <Fragment key={m.imdbID}>
               {i !== 0 && (

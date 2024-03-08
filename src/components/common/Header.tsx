@@ -18,7 +18,7 @@ import { useTheme } from '@mui/material/styles';
 interface IProp {
   movie?: string;
   type?: string;
-  year?: number;
+  year?: number[];
   onSearchMovie: (searchMovie: string) => void;
   onSearchMovieType: (searchType: string) => void;
   onSearchYear: (searchYear: number) => void;
@@ -34,6 +34,10 @@ export const Header = ({
 }: IProp) => {
   const theme = useTheme();
   const primary = theme.palette.primary.main;
+
+  function valuetext(value: number) {
+    return `${value}°C`;
+  }
 
   return (
     <AppBar position="static" sx={{ bgcolor: '#666666', height: '130px' }}>
@@ -66,17 +70,19 @@ export const Header = ({
               sx={{ mb: 1 }}
               alignItems="center"
             >
+              <Typography color="primary">{year?.at(0)?.toString()}</Typography>
               <Slider
-                value={year as number}
-                min={1895}
-                max={2024}
-                onChange={(_event, newValue) =>
-                  onSearchYear(newValue as number)
-                }
+                value={year}
+                // onChange={(newValue) => onSearchYear(newValue)}
+                min={2000}
+                max={2005}
+                // getAriaLabel={() => 'Temperature range'}
+                onChange={onSearchYear}
                 valueLabelDisplay="auto"
+                getAriaValueText={valuetext}
                 sx={{ height: '30%' }}
               />
-              <Typography color="primary">{year}</Typography>
+              <Typography color="primary">{year?.at(1)?.toString()}</Typography>
             </Stack>
           </Grid>
 
