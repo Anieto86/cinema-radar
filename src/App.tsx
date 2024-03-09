@@ -3,14 +3,14 @@ import { debounce, throttle } from 'lodash';
 import { MovieList } from './components/MovieList';
 import { Header } from './components/common/Header';
 import { MovieContent } from './components/MovieContent';
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import { useFetch } from './hook/useFetch';
 import { useState } from 'react';
 import { Search } from './hook/useFetch';
 
 function App() {
-  const [movie, setMovie] = useState<string | undefined>('star wars');
-  const [year, setYear] = useState<number[]>([1980, 2001]);
+  const [movie, setMovie] = useState<string | undefined>('Indiana Jones');
+  const [year, setYear] = useState<number[]>([1984, 1990]);
   const [type, setType] = useState<string>('movie');
   const [selectMovie, setSelectMovie] = useState<number>(0);
   const params = {
@@ -21,16 +21,17 @@ function App() {
 
   const { data, loading, error } = useFetch({ ...params });
 
-  const movies = data?.flatMap((result) => result.Search || []);
-
-  const movieId = movies?.map((result) => result.imdbID)[selectMovie] as string;
-
-  const totalResult = data
-    ?.map((result) => result.totalResults)
-    .reduce((total, current) => total + parseInt(current), 0);
-
   if (loading) return <div>Loading...</div>;
   if (error) return <div>error</div>;
+
+  const filteredData = data?.filter((d) => d.Response === 'True');
+
+  const movies = filteredData?.flatMap((result) => result.Search || []);
+  const movieId = movies?.map((result) => result.imdbID)[selectMovie] as string;
+
+  const totalResult = filteredData
+    ?.map((obj) => parseInt(obj.totalResults))
+    .reduce((acc, curr) => acc + curr, 0);
 
   const handleSearchMovie = debounce((value: string | undefined) => {
     setMovie(value);
@@ -46,9 +47,6 @@ function App() {
   const handleSearchMovieType = (value: string) => {
     if (movie) setType(value);
   };
-
-  // console.log(data?.flatMap((r) => r.Response));
-  // console.log(data);
 
   return (
     <Grid container>
@@ -73,7 +71,13 @@ function App() {
         />
       </Grid>
       <Grid item xs={8}>
-        <MovieContent imdbID={movieId} />
+        {totalResult ? (
+          <MovieContent imdbID={movieId} />
+        ) : (
+          <Grid item xs={8}>
+            <Typography variant="h6">No Results found</Typography>
+          </Grid>
+        )}
       </Grid>
     </Grid>
   );

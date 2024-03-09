@@ -1,16 +1,15 @@
 import { Divider, Grid, Typography } from '@mui/material';
-
 import HideImageOutlinedIcon from '@mui/icons-material/HideImageOutlined';
 import { useFetchMovie } from '../hook/useFetchMovie';
 import { Fragment } from 'react';
 import { WatchList } from './common/WatchList';
 
 interface IProp {
-  imdbID?: string;
+  imdbID: string;
 }
 
 export const MovieContent = ({ imdbID }: IProp) => {
-  const { data } = useFetchMovie(imdbID || '');
+  const { data } = useFetchMovie(imdbID as string);
   const { Title, Year, Poster, Plot, Genre, Actors, Ratings, Rated, Runtime } =
     data;
 
@@ -45,7 +44,7 @@ export const MovieContent = ({ imdbID }: IProp) => {
               }}
             />
           ) : (
-            <HideImageOutlinedIcon sx={{ fontSize: '95px' }} />
+            <HideImageOutlinedIcon sx={{ fontSize: '200px', ml: 5, mt: 5 }} />
           )}
         </Grid>
 
@@ -58,7 +57,7 @@ export const MovieContent = ({ imdbID }: IProp) => {
             sx={{ outline: '1px solid black' }}
           >
             <Grid item sx={{ border: '1px solid black', mb: 5 }}>
-              <WatchList />
+              <WatchList imdbID={imdbID} />
             </Grid>
           </Grid>
           <Typography variant="h2" fontWeight={600} sx={{ my: 10 }}>
