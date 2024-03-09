@@ -1,16 +1,15 @@
-import { Button, Divider, Grid, Typography } from '@mui/material';
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
+import { Divider, Grid, Typography } from '@mui/material';
+
 import HideImageOutlinedIcon from '@mui/icons-material/HideImageOutlined';
 import { useFetchMovie } from '../hook/useFetchMovie';
-import { Fragment, useState } from 'react';
+import { Fragment } from 'react';
+import { WatchList } from './common/WatchList';
 
 interface IProp {
   imdbID?: string;
 }
 
 export const MovieContent = ({ imdbID }: IProp) => {
-  const [watchlist, setWatchlist] = useState(false);
   const { data } = useFetchMovie(imdbID || '');
   const { Title, Year, Poster, Plot, Genre, Actors, Ratings, Rated, Runtime } =
     data;
@@ -59,17 +58,7 @@ export const MovieContent = ({ imdbID }: IProp) => {
             sx={{ outline: '1px solid black' }}
           >
             <Grid item sx={{ border: '1px solid black', mb: 5 }}>
-              <Button
-                sx={{ p: 2, color: 'black' }}
-                onClick={() => {
-                  setWatchlist((watchlist) => !watchlist);
-                }}
-                startIcon={
-                  watchlist ? <BookmarkIcon /> : <BookmarkBorderIcon />
-                }
-              >
-                Watchlist
-              </Button>
+              <WatchList />
             </Grid>
           </Grid>
           <Typography variant="h2" fontWeight={600} sx={{ my: 10 }}>
