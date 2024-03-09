@@ -1,4 +1,6 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { handleYearRange } from '../utils/helpers';
+
 const key = import.meta.env.VITE_REACT_APP_OMDb_API_KEY;
 
 interface IProp {
@@ -25,49 +27,39 @@ export const useFetch = ({ name, year, type }: IProp) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
-  // console.log(year);
-
-  const intermediateValues = (year: number[]) => {
-    const newArray = [];
-    const start = year[0];
-    const end = year[year.length - 1];
-    for (let i = start; i <= end; i++) {
-      newArray.push(i);
-    }
-    return newArray;
-  };
+  //Avoid extra re-render calls
+  const yearRange = useMemo(() => handleYearRange(year), [year]);
 
   const fetchData = useCallback(async () => {
     // setLoading(true);
-
     try {
       const URL = `http://www.omdbapi.com/?apikey=${key}`;
-      const yearRange = intermediateValues(year);
-      const requests = yearRange.map(async (year) => {
-        const response = await fetch(`${URL}&s=${name}&type=${type}&y=${year}`);
+      const fetchPromises = yearRange.map(async (years) => {
+        const response = await fetch(
+          `${URL}&s=${name}&type=${type}&y=${years}`
+        );
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         return await response.json();
       });
 
-      const results = await Promise.allSettled(requests);
-
-      const searchData = results
+      const results = await Promise.allSettled(fetchPromises);
+      const successfulResults = results
         .filter(
           (result): result is PromiseFulfilledResult<SearchResult> =>
-            result.status === 'fulfilled' && result.value && result.value.Search
+            result.status === 'fulfilled'
         )
         .map((result) => result.value);
 
-      setData(searchData as SearchResult[]);
+      setData(successfulResults as SearchResult[]);
     } catch (error) {
       setError(error as Error | null);
       setLoading(false);
     } finally {
       setLoading(false);
     }
-  }, [name, type, year]);
+  }, [name, type, yearRange]);
 
   useEffect(() => {
     fetchData();
