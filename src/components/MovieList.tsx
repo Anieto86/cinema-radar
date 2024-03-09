@@ -1,4 +1,5 @@
 import {
+  // Box,
   // Button,
   Divider,
   Grid,
@@ -10,6 +11,7 @@ import {
 import HideImageOutlinedIcon from '@mui/icons-material/HideImageOutlined';
 import { Search } from '../hook/useFetch';
 import { Fragment } from 'react/jsx-runtime';
+import { styled } from '@mui/system';
 
 interface IProp {
   selectMovie: number;
@@ -19,6 +21,18 @@ interface IProp {
   onSearchMovie: (value: string) => void;
   onSearchYear: (event: Event | null, newValue: number[]) => void;
 }
+
+const CustomScrollbar = styled('div')({
+  overflowY: 'auto',
+  scrollbarWidth: 'thin', // Para navegadores que admiten el estilo de barra de desplazamiento del sistema
+  scrollbarColor: '#d82020', // Color de la barra de desplazamiento (solo para navegadores que lo admiten)
+  '&::-webkit-scrollbar': {
+    width: '2rem',
+  },
+  '&::-webkit-scrollbar-track': {
+    backgroundColor: '#bdbdbd',
+  },
+});
 
 export const MovieList = ({
   movies,
@@ -34,15 +48,7 @@ IProp) => {
   // };
 
   return (
-    <Grid
-      container
-      sx={{
-        borderRight: 'solid 1px grey',
-        overflowY: 'scroll',
-        scrollbarWidth: 'thin',
-        scrollbarColor: '#ebebeb',
-      }}
-    >
+    <CustomScrollbar>
       <Grid item xs={12} sx={{ m: 5 }}>
         <Typography variant="h6">{totalResult} RESULTS</Typography>
       </Grid>
@@ -124,6 +130,6 @@ IProp) => {
           </Grid>
         </Grid>
       )} */}
-    </Grid>
+    </CustomScrollbar>
   );
 };
