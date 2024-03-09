@@ -46,7 +46,7 @@ export const Header = ({
           wrap="nowrap"
           sx={{ p: 1, mt: 1 }}
         >
-          <Grid item xs={4} sx={{ border: '1px solid #ff0505' }}>
+          <Grid item xs={5} sx={{ border: '1px solid #ff0505' }}>
             <TextField
               id="search-movie"
               InputProps={{

@@ -1,8 +1,7 @@
 import './App.css';
-import { debounce } from 'lodash';
+import { debounce, throttle } from 'lodash';
 import { MovieList } from './components/MovieList';
 import { Header } from './components/common/Header';
-// import { ErrorPage } from './routes/ErrorPage';
 import { MovieContent } from './components/MovieContent';
 import { Grid } from '@mui/material';
 import { useFetch } from './hook/useFetch';
@@ -37,13 +36,19 @@ function App() {
     setMovie(value);
   }, 100);
 
-  const handleSearchYear = (_event: Event | null, newValue: number[]) => {
-    setYear(newValue as number[]);
-  };
+  const handleSearchYear = throttle(
+    (_event: Event | null, newValue: number[]) => {
+      setYear(newValue as number[]);
+    },
+    500
+  );
 
   const handleSearchMovieType = (value: string) => {
     if (movie) setType(value);
   };
+
+  // console.log(data?.flatMap((r) => r.Response));
+  // console.log(data);
 
   return (
     <Grid container>

@@ -49,7 +49,7 @@ export const MovieContent = ({ imdbID }: IProp) => {
           )}
         </Grid>
 
-        <Grid item xs={9} sx={{ border: '1px solid green' }}>
+        <Grid item lg={9} md={12} xs={12} sx={{ border: '1px solid green' }}>
           <Grid
             container
             display="flex"

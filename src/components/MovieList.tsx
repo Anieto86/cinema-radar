@@ -1,5 +1,5 @@
 import {
-  Button,
+  // Button,
   Divider,
   Grid,
   List,
@@ -25,11 +25,17 @@ export const MovieList = ({
   totalResult,
   selectMovie,
   onSelectMovie,
-  onSearchMovie,
-  onSearchYear,
-}: IProp) => {
+}: // onSearchMovie,
+// onSearchYear,
+IProp) => {
+  // const handleResetSearch = () => {
+  //   onSearchMovie('star wars');
+  //   onSearchYear(null, [1980, 2001]);
+  // };
+
   return (
     <Grid
+      container
       sx={{
         borderRight: 'solid 1px grey',
         overflowY: 'scroll',
@@ -40,7 +46,8 @@ export const MovieList = ({
       <Grid item xs={12} sx={{ m: 5 }}>
         <Typography variant="h6">{totalResult} RESULTS</Typography>
       </Grid>
-      {totalResult ? (
+      {/* {!totalResult ? ( */}
+      <Grid item xs={12}>
         <List sx={{ my: 2 }}>
           {movies?.map((m, i: number) => {
             return (
@@ -50,6 +57,7 @@ export const MovieList = ({
                     <Divider />
                   </Grid>
                 )}
+
                 <ListItemButton
                   selected={selectMovie === i}
                   onClick={() => onSelectMovie(i)}
@@ -63,26 +71,26 @@ export const MovieList = ({
                   }}
                 >
                   <ListItem>
-                    {m.Poster !== 'N/A' ? (
-                      <img
-                        src={m.Poster}
-                        alt="movies-poster"
-                        style={{
-                          marginRight: '12px',
-                          width: '80px',
-                          height: '80px',
-                          objectFit: 'cover',
-                          borderRadius: '5px',
-                        }}
-                      />
-                    ) : (
-                      <HideImageOutlinedIcon sx={{ fontSize: '95px' }} />
-                    )}
-                    <Grid container spacing={1} ml={2}>
-                      <Grid item xs={12}>
-                        <Typography variant="h5">{m.Title}</Typography>
+                    <Grid container>
+                      <Grid item lg={2} md={2} xs={12}>
+                        {m.Poster !== 'N/A' ? (
+                          <img
+                            src={m.Poster}
+                            alt="movies-poster"
+                            style={{
+                              marginRight: '12px',
+                              width: '80px',
+                              height: '80px',
+                              objectFit: 'cover',
+                              borderRadius: '5px',
+                            }}
+                          />
+                        ) : (
+                          <HideImageOutlinedIcon sx={{ fontSize: '95px' }} />
+                        )}{' '}
                       </Grid>
-                      <Grid item>
+                      <Grid item lg={8} md={12} xs={12}>
+                        <Typography variant="h5">{m.Title}</Typography>
                         <Typography variant="h6">{m.Year}</Typography>
                       </Grid>
                     </Grid>
@@ -92,20 +100,30 @@ export const MovieList = ({
             );
           })}
         </List>
-      ) : (
-        <Grid sx={{ outline: '1px solid black', p: 2, my: 2 }}>
-          <Typography variant="h6">No Results Please select</Typography>
-          <Button
-            sx={{ outline: '1px solid black', p: 2, my: 2 }}
-            onClick={() => {
-              onSearchMovie('start wars');
-              onSearchYear(null, [2000, 2020]);
-            }}
-          >
-            Reset Search
-          </Button>
+      </Grid>
+      {/* ) : (
+        <Grid
+          container
+          display="flex"
+          direction="column"
+          justifyContent="flex-start"
+          alignItems="center"
+          spacing={2}
+          sx={{ outline: '1px solid black', p: 2, my: 2, height: '100vh' }}
+        >
+          <Grid item>
+            <Typography variant="h6">No Results found Please select</Typography>
+          </Grid>
+          <Grid item>
+            <Button
+              sx={{ outline: '1px solid black', p: 2, my: 2, color: 'black' }}
+              onClick={handleResetSearch}
+            >
+              Reset Search
+            </Button>
+          </Grid>
         </Grid>
-      )}
+      )} */}
     </Grid>
   );
 };
