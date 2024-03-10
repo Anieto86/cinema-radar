@@ -13,6 +13,7 @@ function App() {
   const [year, setYear] = useState<number[]>([1984, 1990]);
   const [type, setType] = useState<string>('movie');
   const [selectMovie, setSelectMovie] = useState<number>(0);
+
   const params = {
     name: movie,
     type,
@@ -72,7 +73,7 @@ function App() {
       </Grid>
       <Grid item xs={8}>
         {totalResult ? (
-          <MovieContent imdbID={movieId} />
+          <MovieContent movieId={movieId} />
         ) : (
           <Grid item xs={8}>
             <Typography variant="h6">No Results found</Typography>

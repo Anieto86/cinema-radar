@@ -1,17 +1,46 @@
-import { Divider, Grid, Typography } from '@mui/material';
+import { Divider, Grid, Paper, Typography } from '@mui/material';
 import HideImageOutlinedIcon from '@mui/icons-material/HideImageOutlined';
-import { useFetchMovie } from '../hook/useFetchMovie';
-import { Fragment } from 'react';
+import { MovieType, useFetchMovie } from '../hook/useFetchMovie';
+import { Fragment, useState, useEffect } from 'react';
 import { WatchList } from './common/WatchList';
 
 interface IProp {
-  imdbID: string;
+  movieId: string;
 }
 
-export const MovieContent = ({ imdbID }: IProp) => {
-  const { data } = useFetchMovie(imdbID as string);
-  const { Title, Year, Poster, Plot, Genre, Actors, Ratings, Rated, Runtime } =
-    data;
+export const MovieContent = ({ movieId }: IProp) => {
+  const [favorites, setFavorites] = useState<MovieType[]>(() => {
+    const fav = window.localStorage.getItem('FAVORITES_STORAGE');
+    return fav !== null ? JSON.parse(fav) : [];
+  });
+
+  const { data } = useFetchMovie(movieId as string);
+  const {
+    Title,
+    Year,
+    Poster,
+    Plot,
+    Genre,
+    Actors,
+    Ratings,
+    Rated,
+    Runtime,
+    imdbID,
+  } = data;
+
+  useEffect(() => {
+    window.localStorage.setItem('FAVORITES_STORAGE', JSON.stringify(favorites));
+  }, [favorites]);
+
+  const handleFavorites = (movie: MovieType) => {
+    const updatedWatchList = new Set([...favorites, movie]);
+    setFavorites([...updatedWatchList]);
+  };
+
+  const handleRemoveFavorite = (imdbID: string) => {
+    const myList = favorites.filter((movie) => movie.imdbID !== imdbID);
+    setFavorites(myList);
+  };
 
   return (
     <>
@@ -57,7 +86,12 @@ export const MovieContent = ({ imdbID }: IProp) => {
             sx={{ outline: '1px solid black' }}
           >
             <Grid item sx={{ border: '1px solid black', mb: 5 }}>
-              <WatchList imdbID={imdbID} />
+              <WatchList
+                imdbID={imdbID}
+                favorites={favorites as MovieType[]}
+                addFavorite={() => handleFavorites(data)}
+                removeFavorite={handleRemoveFavorite}
+              ></WatchList>
             </Grid>
           </Grid>
           <Typography variant="h2" fontWeight={600} sx={{ my: 10 }}>
@@ -71,7 +105,7 @@ export const MovieContent = ({ imdbID }: IProp) => {
               padding: '10px',
             }}
           >
-            {`${Rated} ${Year} \u00B7 ${Genre} \u00B7 ${Runtime}`}
+            {`${Rated} ${Year} · ${Genre} · ${Runtime}`}
           </Typography>
           <Typography variant="h5">{Actors}</Typography>
         </Grid>
@@ -116,6 +150,50 @@ export const MovieContent = ({ imdbID }: IProp) => {
               </Fragment>
             );
           })}
+        </Grid>
+
+        <Grid
+          container
+          display="flex"
+          direction="row"
+          justifyContent="space-evenly"
+          alignItems="center"
+          sx={{ my: 10 }}
+        >
+          {favorites.length !== 0 && (
+            <Grid item xs={12} sx={{ my: 2 }} textAlign="center">
+              <Typography variant="h3">My List</Typography>
+            </Grid>
+          )}
+          {favorites.map((fav, i) => (
+            <Grid item key={i}>
+              <Paper elevation={3}>
+                {fav.Poster !== 'N/A' ? (
+                  <img
+                    src={fav.Poster}
+                    alt="movies-poster"
+                    style={{
+                      borderRadius: '5px',
+                      objectFit: 'cover',
+                      width: '200px',
+                      height: '250px',
+                    }}
+                  />
+                ) : (
+                  <HideImageOutlinedIcon
+                    sx={{ fontSize: '200px', ml: 5, mt: 5 }}
+                  />
+                )}
+
+                {/* <Typography
+                  variant="subtitle1"
+                  sx={{ position: 'absolute', bottom: 0 }}
+                >
+                  {fav.Title}
+                </Typography> */}
+              </Paper>
+            </Grid>
+          ))}
         </Grid>
       </Grid>
     </>
