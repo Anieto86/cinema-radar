@@ -1,4 +1,4 @@
-import { Button, Divider, Grid, Typography } from '@mui/material';
+import { Divider, Grid, Paper, Typography } from '@mui/material';
 import HideImageOutlinedIcon from '@mui/icons-material/HideImageOutlined';
 import { MovieType, useFetchMovie } from '../hook/useFetchMovie';
 import { Fragment, useState, useEffect } from 'react';
@@ -35,17 +35,12 @@ export const MovieContent = ({ movieId }: IProp) => {
   const handleFavorites = (movie: MovieType) => {
     const updatedWatchList = new Set([...favorites, movie]);
     setFavorites([...updatedWatchList]);
-
-    // const updatedWatchList = [...favorites, movie];
-    // setFavorites(updatedWatchList);
   };
 
   const handleRemoveFavorite = (imdbID: string) => {
     const myList = favorites.filter((movie) => movie.imdbID !== imdbID);
     setFavorites(myList);
   };
-
-  console.log(favorites);
 
   return (
     <>
@@ -157,25 +152,46 @@ export const MovieContent = ({ movieId }: IProp) => {
           })}
         </Grid>
 
-        <Grid container>
-          {favorites.map((w, i) => (
-            <Grid item key={i} xs={3}>
-              <img
-                src={w.Poster}
-                alt="movies-poster"
-                style={{
-                  borderRadius: '5px',
-                  objectFit: 'contain',
-                  width: '100%',
-                  height: 'auto',
-                }}
-              />
-              <Button
-                sx={{ color: 'red' }}
-                onClick={() => handleRemoveFavorite(imdbID)}
-              >
-                remove
-              </Button>
+        <Grid
+          container
+          display="flex"
+          direction="row"
+          justifyContent="space-evenly"
+          alignItems="center"
+          sx={{ my: 10 }}
+        >
+          {favorites.length !== 0 && (
+            <Grid item xs={12} sx={{ my: 2 }} textAlign="center">
+              <Typography variant="h3">My List</Typography>
+            </Grid>
+          )}
+          {favorites.map((fav, i) => (
+            <Grid item key={i}>
+              <Paper elevation={3}>
+                {fav.Poster !== 'N/A' ? (
+                  <img
+                    src={fav.Poster}
+                    alt="movies-poster"
+                    style={{
+                      borderRadius: '5px',
+                      objectFit: 'cover',
+                      width: '200px',
+                      height: '250px',
+                    }}
+                  />
+                ) : (
+                  <HideImageOutlinedIcon
+                    sx={{ fontSize: '200px', ml: 5, mt: 5 }}
+                  />
+                )}
+
+                {/* <Typography
+                  variant="subtitle1"
+                  sx={{ position: 'absolute', bottom: 0 }}
+                >
+                  {fav.Title}
+                </Typography> */}
+              </Paper>
             </Grid>
           ))}
         </Grid>
