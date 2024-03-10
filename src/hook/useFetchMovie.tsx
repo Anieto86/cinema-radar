@@ -6,7 +6,7 @@ interface RatingType {
   Value: string;
 }
 
-interface MovieType {
+export interface MovieType {
   Poster: string;
   Title: string;
   Year: string;

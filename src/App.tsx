@@ -13,6 +13,7 @@ function App() {
   const [year, setYear] = useState<number[]>([1984, 1990]);
   const [type, setType] = useState<string>('movie');
   const [selectMovie, setSelectMovie] = useState<number>(0);
+
   const params = {
     name: movie,
     type,
