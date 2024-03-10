@@ -1,6 +1,4 @@
 import {
-  // Box,
-  Button,
   Divider,
   Grid,
   List,
@@ -12,41 +10,21 @@ import HideImageOutlinedIcon from '@mui/icons-material/HideImageOutlined';
 import { Search } from '../hook/useFetch';
 import { Fragment } from 'react/jsx-runtime';
 import { styled } from '@mui/system';
+import SearchOffIcon from '@mui/icons-material/SearchOff';
 
 interface IProp {
   selectMovie: number;
   movies: Search[];
   totalResult: number;
   onSelectMovie: (i: number) => void;
-  onSearchMovie: (value: string) => void;
-  onSearchYear: (event: Event | null, newValue: number[]) => void;
 }
-
-const CustomScrollbar = styled('div')({
-  overflowY: 'auto',
-  scrollbarWidth: 'thin',
-  scrollbarColor: '#d82020',
-  '&::-webkit-scrollbar': {
-    width: '2rem',
-  },
-  '&::-webkit-scrollbar-track': {
-    backgroundColor: '#bdbdbd',
-  },
-});
 
 export const MovieList = ({
   movies,
   totalResult,
   selectMovie,
   onSelectMovie,
-  onSearchMovie,
-  onSearchYear,
 }: IProp) => {
-  const handleResetSearch = () => {
-    onSearchMovie('Indiana Jones');
-    onSearchYear(null, [1984, 2001]);
-  };
-
   return (
     <CustomScrollbar>
       <Grid item xs={12} sx={{ m: 5 }}>
@@ -115,21 +93,24 @@ export const MovieList = ({
           justifyContent="flex-start"
           alignItems="center"
           spacing={2}
-          sx={{ outline: '1px solid black', p: 2, my: 2, height: '100vh' }}
+          sx={{ p: 2, my: 2, height: '100vh' }}
         >
           <Grid item>
-            <Typography variant="h6">No Results found</Typography>
+            <SearchOffIcon sx={{ fontSize: '100px' }} />
           </Grid>
           <Grid item>
-            <Button
-              sx={{ outline: '1px solid black', p: 2, my: 2, color: 'black' }}
-              onClick={handleResetSearch}
-            >
-              Reset Search
-            </Button>
+            <Typography variant="h5">No Results found</Typography>
           </Grid>
         </Grid>
       )}
     </CustomScrollbar>
   );
 };
+
+export const CustomScrollbar = styled('div')({
+  borderRight: '1px solid #c4c4c4',
+  overflowY: 'scroll',
+  overflowX: 'hidden',
+  maxHeight: ' calc(100vh - 10px)',
+  scrollbarColor: '#c4c4c4 transparent',
+});

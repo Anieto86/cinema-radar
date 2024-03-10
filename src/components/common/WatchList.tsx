@@ -23,6 +23,7 @@ export const WatchList = ({
   });
 
   const handleToggle = () => {
+    const updatedValue = watchlist[imdbID];
     setWatchlist((prevWatchlist: { [x: string]: boolean }) => {
       const updatedWatchlist = {
         ...prevWatchlist,
@@ -37,7 +38,7 @@ export const WatchList = ({
       return updatedWatchlist;
     });
 
-    if (watchlist[imdbID]) {
+    if (updatedValue) {
       removeFavorite(imdbID);
     } else {
       addFavorite(favorites as unknown as MovieType);
@@ -46,7 +47,13 @@ export const WatchList = ({
 
   return (
     <Button
-      sx={{ p: 2, color: 'black' }}
+      sx={{
+        p: 3,
+        color: 'black',
+        fontWeight: 600,
+        border: 'solid ',
+        borderRadius: '10px',
+      }}
       onClick={handleToggle}
       startIcon={watchlist[imdbID] ? <BookmarkIcon /> : <BookmarkBorderIcon />}
     >

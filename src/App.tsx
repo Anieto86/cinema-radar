@@ -7,6 +7,7 @@ import { Grid, Typography } from '@mui/material';
 import { useFetch } from './hook/useFetch';
 import { useState } from 'react';
 import { Search } from './hook/useFetch';
+import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 
 function App() {
   const [movie, setMovie] = useState<string | undefined>('Indiana Jones');
@@ -67,16 +68,30 @@ function App() {
           totalResult={totalResult as number}
           selectMovie={selectMovie}
           onSelectMovie={(index: number) => setSelectMovie(index)}
-          onSearchMovie={handleSearchMovie}
-          onSearchYear={(_e, newValue) => handleSearchYear(_e, newValue)}
         />
       </Grid>
       <Grid item xs={8}>
         {totalResult ? (
           <MovieContent movieId={movieId} />
         ) : (
-          <Grid item xs={8}>
-            <Typography variant="h6">No Results found</Typography>
+          <Grid
+            container
+            display="flex"
+            direction="column"
+            justifyContent="flex-start"
+            alignItems="center"
+            spacing={2}
+            sx={{ p: 2, my: 2, height: '100vh' }}
+          >
+            <Grid item>
+              <Typography variant="h5">Please try again</Typography>
+            </Grid>
+            <Grid item style={{ fontSize: 70 }}>
+              🤦‍♂️
+            </Grid>
+            <Grid item>
+              <InfoRoundedIcon sx={{ fontSize: '100px' }} />
+            </Grid>
           </Grid>
         )}
       </Grid>

@@ -43,10 +43,11 @@ export const Header = ({
           direction="row"
           justifyContent="space-between"
           alignItems="center"
+          alignContent="center"
           wrap="nowrap"
           sx={{ p: 1, mt: 1 }}
         >
-          <Grid item xs={5} sx={{ border: '1px solid #ff0505' }}>
+          <Grid item xs={5}>
             <TextField
               id="search-movie"
               InputProps={{
@@ -58,7 +59,7 @@ export const Header = ({
               onChange={(e) => onSearchMovie(e.target.value)}
             />
           </Grid>
-          <Grid item xs={2} sx={{ border: '1px solid #ff0505' }}>
+          <Grid item xs={2}>
             <Typography color="primary">YEAR</Typography>
             <Stack
               spacing={3}
@@ -87,7 +88,6 @@ export const Header = ({
             sx={{
               display: 'flex',
               justifyContent: 'flex-end',
-              border: '1px solid #000000',
             }}
           >
             <FormControl>
@@ -103,31 +103,28 @@ export const Header = ({
                 name="controlled-radio-buttons-group"
                 value={type}
                 onChange={(e) => onSearchMovieType(e.target.value)}
+                sx={{ color: primary }}
               >
                 <FormControlLabel
                   value={''}
                   control={<Radio sx={{ color: primary }} />}
                   label="Any"
-                  sx={{ color: primary }}
                 />
                 <FormControlLabel
                   color="primary"
                   value="movie"
                   control={<Radio sx={{ color: primary }} />}
                   label="Movies"
-                  sx={{ color: primary }}
                 />
                 <FormControlLabel
                   value="series"
                   control={<Radio sx={{ color: primary }} />}
                   label="Series"
-                  sx={{ color: primary }}
                 />
                 <FormControlLabel
                   value="episode"
                   control={<Radio sx={{ color: primary }} />}
                   label="Episodes"
-                  sx={{ color: primary }}
                 />
               </RadioGroup>
             </FormControl>

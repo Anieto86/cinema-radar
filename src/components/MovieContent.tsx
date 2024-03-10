@@ -1,8 +1,9 @@
-import { Divider, Grid, Paper, Typography } from '@mui/material';
+import { Divider, Grid, IconButton, Paper, Typography } from '@mui/material';
 import HideImageOutlinedIcon from '@mui/icons-material/HideImageOutlined';
 import { MovieType, useFetchMovie } from '../hook/useFetchMovie';
 import { Fragment, useState, useEffect } from 'react';
 import { WatchList } from './common/WatchList';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 interface IProp {
   movieId: string;
@@ -50,7 +51,6 @@ export const MovieContent = ({ movieId }: IProp) => {
         justifyContent="space-evenly"
         alignItems="center"
         sx={{
-          outline: '1px solid red',
           mt: 2,
         }}
       >
@@ -67,7 +67,7 @@ export const MovieContent = ({ movieId }: IProp) => {
               alt="movies-poster"
               style={{
                 borderRadius: '5px',
-                objectFit: 'contain',
+                objectFit: 'cover',
                 width: '100%',
                 height: 'auto',
               }}
@@ -77,13 +77,12 @@ export const MovieContent = ({ movieId }: IProp) => {
           )}
         </Grid>
 
-        <Grid item lg={9} md={12} xs={12} sx={{ border: '1px solid green' }}>
+        <Grid item lg={9} md={12} xs={12}>
           <Grid
             container
             display="flex"
             justifyContent="flex-end"
             alignItems="flex-end"
-            sx={{ outline: '1px solid black' }}
           >
             <Grid item sx={{ border: '1px solid black', mb: 5 }}>
               <WatchList
@@ -101,7 +100,7 @@ export const MovieContent = ({ movieId }: IProp) => {
             variant="h5"
             sx={{
               my: 3,
-              border: '1px solid black',
+
               padding: '10px',
             }}
           >
@@ -152,47 +151,76 @@ export const MovieContent = ({ movieId }: IProp) => {
           })}
         </Grid>
 
-        <Grid
-          container
-          display="flex"
-          direction="row"
-          justifyContent="space-evenly"
-          alignItems="center"
-          sx={{ my: 10 }}
-        >
+        <Grid item xs={12} sx={{ my: 2 }} textAlign="center">
           {favorites.length !== 0 && (
-            <Grid item xs={12} sx={{ my: 2 }} textAlign="center">
-              <Typography variant="h3">My List</Typography>
-            </Grid>
+            <Typography variant="h3">My List</Typography>
           )}
+        </Grid>
+        <Grid item xs={10}>
           {favorites.map((fav, i) => (
-            <Grid item key={i}>
-              <Paper elevation={3}>
+            <Paper elevation={3} key={i}>
+              <Grid
+                container
+                display="flex"
+                alignItems="center"
+                key={i}
+                sx={{ my: 2 }}
+              >
                 {fav.Poster !== 'N/A' ? (
-                  <img
-                    src={fav.Poster}
-                    alt="movies-poster"
-                    style={{
-                      borderRadius: '5px',
-                      objectFit: 'cover',
-                      width: '200px',
-                      height: '250px',
-                    }}
-                  />
+                  <>
+                    <Grid item lg={4} md={12} xs={12}>
+                      <img
+                        src={fav.Poster}
+                        alt="movies-poster"
+                        style={{
+                          borderRadius: '5px',
+                          objectFit: 'cover',
+                          width: '200px',
+                          height: '250px',
+                        }}
+                      />
+                    </Grid>
+                    <Grid item lg={6} md={12} xs={12}>
+                      <Typography variant="h5">
+                        {fav.Title} - {fav.Year}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={1}>
+                      <IconButton
+                        aria-label="delete"
+                        size="large"
+                        onClick={() => handleRemoveFavorite(fav.imdbID)}
+                      >
+                        <DeleteIcon fontSize="inherit" color="error" />
+                      </IconButton>
+                    </Grid>
+                  </>
                 ) : (
-                  <HideImageOutlinedIcon
-                    sx={{ fontSize: '200px', ml: 5, mt: 5 }}
-                  />
+                  <>
+                    <Grid item lg={4} md={12} xs={12}>
+                      <HideImageOutlinedIcon
+                        sx={{ fontSize: '200px', ml: 5, mt: 5 }}
+                      />
+                    </Grid>
+                    <Grid item lg={6} md={12} xs={12}>
+                      <Typography variant="h5" sx={{}}>
+                        {fav.Title}
+                        {fav.Year}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={1}>
+                      <IconButton
+                        aria-label="delete"
+                        size="large"
+                        onClick={() => handleRemoveFavorite(fav.imdbID)}
+                      >
+                        <DeleteIcon fontSize="inherit" color="error" />
+                      </IconButton>
+                    </Grid>
+                  </>
                 )}
-
-                {/* <Typography
-                  variant="subtitle1"
-                  sx={{ position: 'absolute', bottom: 0 }}
-                >
-                  {fav.Title}
-                </Typography> */}
-              </Paper>
-            </Grid>
+              </Grid>
+            </Paper>
           ))}
         </Grid>
       </Grid>

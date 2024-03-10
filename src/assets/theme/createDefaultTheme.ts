@@ -38,20 +38,5 @@ export const theme = createTheme({
         },
       },
     },
-    // MuiFormControlLabel: {
-    //   // Estilos para el label del radio
-    //   styleOverrides: {
-    //     label: {
-    //       color: '#fefefe', // Color blanco para el label del radio
-    //     },
-    //   },
-    // },
-    // MuiRadio: {
-    //   styleOverrides: {
-    //     root: {
-    //       color: 'white', // Color del icono del radio
-    //     },
-    //   },
-    // },
   },
 });
