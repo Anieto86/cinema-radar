@@ -7,6 +7,7 @@ interface RatingType {
 }
 
 export interface MovieType {
+  imdbID: string;
   Poster: string;
   Title: string;
   Year: string;

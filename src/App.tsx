@@ -73,7 +73,7 @@ function App() {
       </Grid>
       <Grid item xs={8}>
         {totalResult ? (
-          <MovieContent imdbID={movieId} />
+          <MovieContent movieId={movieId} />
         ) : (
           <Grid item xs={8}>
             <Typography variant="h6">No Results found</Typography>

@@ -1,32 +1,51 @@
 import { Button, Divider, Grid, Typography } from '@mui/material';
 import HideImageOutlinedIcon from '@mui/icons-material/HideImageOutlined';
-import { useFetchMovie } from '../hook/useFetchMovie';
-import { Fragment, useState } from 'react';
+import { MovieType, useFetchMovie } from '../hook/useFetchMovie';
+import { Fragment, useState, useEffect } from 'react';
 import { WatchList } from './common/WatchList';
-import { Search } from '../hook/useFetch';
 
 interface IProp {
-  imdbID: string;
+  movieId: string;
 }
 
-export const MovieContent = ({ imdbID }: IProp) => {
-  const [watchList, setWatchList] = useState<Search[]>([]);
+export const MovieContent = ({ movieId }: IProp) => {
+  const [favorites, setFavorites] = useState<MovieType[]>(() => {
+    const fav = window.localStorage.getItem('FAVORITES_STORAGE');
+    return fav !== null ? JSON.parse(fav) : [];
+  });
 
-  const { data } = useFetchMovie(imdbID as string);
-  const { Title, Year, Poster, Plot, Genre, Actors, Ratings, Rated, Runtime } =
-    data;
+  const { data } = useFetchMovie(movieId as string);
+  const {
+    Title,
+    Year,
+    Poster,
+    Plot,
+    Genre,
+    Actors,
+    Ratings,
+    Rated,
+    Runtime,
+    imdbID,
+  } = data;
 
-  const handleWatchList = (movie: Search) => {
-    const myList = [...watchList, movie];
-    setWatchList(myList);
+  useEffect(() => {
+    window.localStorage.setItem('FAVORITES_STORAGE', JSON.stringify(favorites));
+  }, [favorites]);
+
+  const handleFavorites = (movie: MovieType) => {
+    const updatedWatchList = new Set([...favorites, movie]);
+    setFavorites([...updatedWatchList]);
+
+    // const updatedWatchList = [...favorites, movie];
+    // setFavorites(updatedWatchList);
   };
 
-  const handleRemoveWatchList = (imdbID: string) => {
-    const myList = watchList.filter((movie) => movie.imdbID !== imdbID);
-    setWatchList(myList);
+  const handleRemoveFavorite = (imdbID: string) => {
+    const myList = favorites.filter((movie) => movie.imdbID !== imdbID);
+    setFavorites(myList);
   };
 
-  console.log(watchList);
+  console.log(favorites);
 
   return (
     <>
@@ -74,9 +93,10 @@ export const MovieContent = ({ imdbID }: IProp) => {
             <Grid item sx={{ border: '1px solid black', mb: 5 }}>
               <WatchList
                 imdbID={imdbID}
-                watchList={watchList}
-                onWatchList={() => handleWatchList(data as unknown as Search)}
-              />
+                favorites={favorites as MovieType[]}
+                addFavorite={() => handleFavorites(data)}
+                removeFavorite={handleRemoveFavorite}
+              ></WatchList>
             </Grid>
           </Grid>
           <Typography variant="h2" fontWeight={600} sx={{ my: 10 }}>
@@ -90,7 +110,7 @@ export const MovieContent = ({ imdbID }: IProp) => {
               padding: '10px',
             }}
           >
-            {`${Rated} ${Year} \u00B7 ${Genre} \u00B7 ${Runtime}`}
+            {`${Rated} ${Year} · ${Genre} · ${Runtime}`}
           </Typography>
           <Typography variant="h5">{Actors}</Typography>
         </Grid>
@@ -137,8 +157,8 @@ export const MovieContent = ({ imdbID }: IProp) => {
           })}
         </Grid>
 
-        <Grid container xs={12}>
-          {watchList.map((w, i) => (
+        <Grid container>
+          {favorites.map((w, i) => (
             <Grid item key={i} xs={3}>
               <img
                 src={w.Poster}
@@ -152,7 +172,7 @@ export const MovieContent = ({ imdbID }: IProp) => {
               />
               <Button
                 sx={{ color: 'red' }}
-                onClick={() => handleRemoveWatchList(imdbID)}
+                onClick={() => handleRemoveFavorite(imdbID)}
               >
                 remove
               </Button>
