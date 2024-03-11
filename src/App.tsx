@@ -11,7 +11,7 @@ import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 
 function App() {
   const [movie, setMovie] = useState<string | undefined>('Indiana Jones');
-  const [year, setYear] = useState<number[]>([1984, 1990]);
+  const [year, setYear] = useState<number[]>([2000, 2012]);
   const [type, setType] = useState<string>('movie');
   const [selectMovie, setSelectMovie] = useState<number>(0);
 

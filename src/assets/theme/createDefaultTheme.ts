@@ -1,13 +1,11 @@
 import { createTheme } from '@mui/material';
-import { green } from '@mui/material/colors';
-
 export const theme = createTheme({
   palette: {
     primary: {
       main: '#fefefe',
     },
     secondary: {
-      main: green[500],
+      main: '#0c0c0c',
     },
   },
   typography: {
@@ -35,6 +33,19 @@ export const theme = createTheme({
               borderColor: 'transparent',
             },
           },
+        },
+      },
+    },
+    MuiSlider: {
+      styleOverrides: {
+        rail: {
+          backgroundColor: '#ffffff',
+        },
+        thumb: {
+          backgroundColor: '#e1e0e0',
+        },
+        track: {
+          backgroundColor: '#e1e0e0',
         },
       },
     },

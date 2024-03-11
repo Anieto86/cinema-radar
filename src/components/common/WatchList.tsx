@@ -1,11 +1,16 @@
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import { useState } from 'react';
 import { MovieType } from '../../hook/useFetchMovie';
 
 interface IProp {
   imdbID: string;
+  watchlist: { [imdbID: string]: boolean };
+  handleWatchlist: (
+    updateFunction: (prevWatchlist: { [x: string]: boolean }) => {
+      [imdbID: string]: boolean;
+    }
+  ) => void;
   addFavorite: (movie: MovieType) => void;
   favorites: MovieType[];
   removeFavorite: (imdbID: string) => void;
@@ -13,18 +18,14 @@ interface IProp {
 
 export const WatchList = ({
   imdbID,
+  watchlist,
+  handleWatchlist,
   addFavorite,
   favorites,
   removeFavorite,
 }: IProp) => {
-  const [watchlist, setWatchlist] = useState(() => {
-    const data = window.localStorage.getItem('WATCHLIST_STORAGE');
-    return data ? JSON.parse(data) : {};
-  });
-
   const handleToggle = () => {
-    const updatedValue = watchlist[imdbID];
-    setWatchlist((prevWatchlist: { [x: string]: boolean }) => {
+    handleWatchlist((prevWatchlist: { [x: string]: boolean }) => {
       const updatedWatchlist = {
         ...prevWatchlist,
         [imdbID]: !prevWatchlist[imdbID],
@@ -38,6 +39,8 @@ export const WatchList = ({
       return updatedWatchlist;
     });
 
+    const updatedValue = watchlist[imdbID];
+
     if (updatedValue) {
       removeFavorite(imdbID);
     } else {
@@ -47,17 +50,21 @@ export const WatchList = ({
 
   return (
     <Button
+      variant="outlined"
+      color="secondary"
+      size="large"
       sx={{
-        p: 3,
-        color: 'black',
+        p: 2,
+        border: '1px solid',
+        borderRadius: '5px',
         fontWeight: 600,
-        border: 'solid ',
-        borderRadius: '10px',
       }}
       onClick={handleToggle}
       startIcon={watchlist[imdbID] ? <BookmarkIcon /> : <BookmarkBorderIcon />}
     >
-      Watchlist
+      <Typography variant="h5" fontWeight={500}>
+        Watchlist
+      </Typography>
     </Button>
   );
 };

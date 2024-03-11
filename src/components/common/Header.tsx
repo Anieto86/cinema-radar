@@ -60,14 +60,18 @@ export const Header = ({
             />
           </Grid>
           <Grid item xs={2}>
-            <Typography color="primary">YEAR</Typography>
+            <Typography color="primary" sx={{ fontSize: '25px' }}>
+              YEAR
+            </Typography>
             <Stack
               spacing={3}
               direction="row"
               sx={{ mb: 1 }}
               alignItems="center"
             >
-              <Typography color="primary">{year?.at(0)?.toString()}</Typography>
+              <Typography color="primary" variant="h6">
+                {year?.at(0)?.toString()}
+              </Typography>
               <Slider
                 value={year}
                 min={1980}
@@ -76,9 +80,13 @@ export const Header = ({
                   onSearchYear(null, newValue as number[])
                 }
                 valueLabelDisplay="auto"
-                sx={{ height: '30%' }}
+                sx={{
+                  height: '30%',
+                }}
               />
-              <Typography color="primary">{year?.at(1)?.toString()}</Typography>
+              <Typography color="primary" variant="h6">
+                {year?.at(1)?.toString()}
+              </Typography>
             </Stack>
           </Grid>
 
@@ -93,7 +101,7 @@ export const Header = ({
             <FormControl>
               <FormLabel
                 id="demo-row-radio-buttons-group-label"
-                sx={{ color: primary }}
+                sx={{ color: primary, fontSize: '25px' }}
               >
                 TYPE
               </FormLabel>

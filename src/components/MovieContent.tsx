@@ -1,4 +1,13 @@
-import { Divider, Grid, IconButton, Paper, Typography } from '@mui/material';
+import {
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Divider,
+  Grid,
+  IconButton,
+  Typography,
+} from '@mui/material';
 import HideImageOutlinedIcon from '@mui/icons-material/HideImageOutlined';
 import { MovieType, useFetchMovie } from '../hook/useFetchMovie';
 import { Fragment, useState, useEffect } from 'react';
@@ -10,6 +19,11 @@ interface IProp {
 }
 
 export const MovieContent = ({ movieId }: IProp) => {
+  const [watchlist, setWatchlist] = useState(() => {
+    const data = window.localStorage.getItem('WATCHLIST_STORAGE');
+    return data ? JSON.parse(data) : {};
+  });
+
   const [favorites, setFavorites] = useState<MovieType[]>(() => {
     const fav = window.localStorage.getItem('FAVORITES_STORAGE');
     return fav !== null ? JSON.parse(fav) : [];
@@ -41,6 +55,7 @@ export const MovieContent = ({ movieId }: IProp) => {
   const handleRemoveFavorite = (imdbID: string) => {
     const myList = favorites.filter((movie) => movie.imdbID !== imdbID);
     setFavorites(myList);
+    setWatchlist({ ...watchlist, [imdbID]: false });
   };
 
   return (
@@ -58,7 +73,7 @@ export const MovieContent = ({ movieId }: IProp) => {
           item
           xs={3}
           sx={{
-            p: 2,
+            p: 4,
           }}
         >
           {Poster !== 'N/A' ? (
@@ -77,36 +92,50 @@ export const MovieContent = ({ movieId }: IProp) => {
           )}
         </Grid>
 
-        <Grid item lg={9} md={12} xs={12}>
+        <Grid item lg={9} md={12} xs={12} sx={{ minHeight: '600px', p: 2 }}>
           <Grid
             container
             display="flex"
             justifyContent="flex-end"
             alignItems="flex-end"
           >
-            <Grid item sx={{ border: '1px solid black', mb: 5 }}>
+            <Grid item>
               <WatchList
                 imdbID={imdbID}
+                watchlist={watchlist}
+                handleWatchlist={setWatchlist}
                 favorites={favorites as MovieType[]}
                 addFavorite={() => handleFavorites(data)}
                 removeFavorite={handleRemoveFavorite}
               ></WatchList>
             </Grid>
           </Grid>
-          <Typography variant="h2" fontWeight={600} sx={{ my: 10 }}>
+          <Typography variant="h2" fontWeight={700} sx={{ my: 10 }}>
             {Title}
           </Typography>
+
           <Typography
             variant="h5"
             sx={{
               my: 3,
-
-              padding: '10px',
+              p: '10px',
             }}
           >
-            {`${Rated} ${Year} · ${Genre} · ${Runtime}`}
+            <span
+              style={{
+                border: '2px solid black',
+                padding: 5,
+                margin: 5,
+                borderRadius: '5px',
+              }}
+            >
+              {Rated}
+            </span>
+            {` ${Year} · ${Genre} · ${Runtime}`}
           </Typography>
-          <Typography variant="h5">{Actors}</Typography>
+          <Typography variant="h5" sx={{ ml: 2 }}>
+            {Actors}
+          </Typography>
         </Grid>
       </Grid>
 
@@ -119,7 +148,7 @@ export const MovieContent = ({ movieId }: IProp) => {
       >
         <Grid item xs={12} sx={{ my: 4 }}>
           <Divider />
-          <Typography textAlign="center" variant="h5" sx={{ p: 4 }}>
+          <Typography textAlign="justify" variant="h4" sx={{ p: 4 }}>
             {Plot}
           </Typography>
           <Divider sx={{ borderLeft: '2px solid grey' }} />
@@ -136,10 +165,12 @@ export const MovieContent = ({ movieId }: IProp) => {
             return (
               <Fragment key={i}>
                 <Grid item>
-                  <Typography textAlign="center" variant="h6" sx={{ mb: 1 }}>
+                  <Typography textAlign="center" variant="h5" sx={{ mb: 1 }}>
                     {Value}
                   </Typography>
-                  <Typography>{Source}</Typography>
+                  <Typography textAlign="center" variant="h5">
+                    {Source}
+                  </Typography>
                 </Grid>
                 {i < Ratings.length - 1 && (
                   <Grid
@@ -150,77 +181,74 @@ export const MovieContent = ({ movieId }: IProp) => {
             );
           })}
         </Grid>
-
+        <Grid item xs={12} sx={{ my: 4 }}>
+          <Divider />
+        </Grid>
         <Grid item xs={12} sx={{ my: 2 }} textAlign="center">
           {favorites.length !== 0 && (
-            <Typography variant="h3">My List</Typography>
+            <Typography variant="h3" fontWeight={600}>
+              My List
+            </Typography>
           )}
         </Grid>
-        <Grid item xs={10}>
+
+        <Grid
+          container
+          display="flex"
+          direction="row"
+          spacing={3}
+          sx={{ my: 2 }}
+        >
           {favorites.map((fav, i) => (
-            <Paper elevation={3} key={i}>
-              <Grid
-                container
-                display="flex"
-                alignItems="center"
-                key={i}
-                sx={{ my: 2 }}
+            <Grid item key={i}>
+              <Card
+                sx={{
+                  maxWidth: 345,
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
               >
                 {fav.Poster !== 'N/A' ? (
-                  <>
-                    <Grid item lg={4} md={12} xs={12}>
-                      <img
-                        src={fav.Poster}
-                        alt="movies-poster"
-                        style={{
-                          borderRadius: '5px',
-                          objectFit: 'cover',
-                          width: '200px',
-                          height: '250px',
-                        }}
-                      />
-                    </Grid>
-                    <Grid item lg={6} md={12} xs={12}>
-                      <Typography variant="h5">
-                        {fav.Title} - {fav.Year}
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={1}>
-                      <IconButton
-                        aria-label="delete"
-                        size="large"
-                        onClick={() => handleRemoveFavorite(fav.imdbID)}
-                      >
-                        <DeleteIcon fontSize="inherit" color="error" />
-                      </IconButton>
-                    </Grid>
-                  </>
+                  <CardMedia
+                    component="img"
+                    src={fav.Poster}
+                    alt="movies-poster"
+                    sx={{
+                      borderRadius: '5px',
+                      minHeight: '400px',
+                      objectFit: 'cover',
+                    }}
+                  />
                 ) : (
-                  <>
-                    <Grid item lg={4} md={12} xs={12}>
-                      <HideImageOutlinedIcon
-                        sx={{ fontSize: '200px', ml: 5, mt: 5 }}
-                      />
-                    </Grid>
-                    <Grid item lg={6} md={12} xs={12}>
-                      <Typography variant="h5" sx={{}}>
-                        {fav.Title}
-                        {fav.Year}
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={1}>
-                      <IconButton
-                        aria-label="delete"
-                        size="large"
-                        onClick={() => handleRemoveFavorite(fav.imdbID)}
-                      >
-                        <DeleteIcon fontSize="inherit" color="error" />
-                      </IconButton>
-                    </Grid>
-                  </>
+                  <Grid item lg={4} md={12} xs={12}>
+                    <HideImageOutlinedIcon
+                      sx={{ fontSize: '200px', ml: 5, mt: 5 }}
+                    />
+                  </Grid>
                 )}
-              </Grid>
-            </Paper>
+                <CardContent>
+                  <Typography textAlign={'center'} fontWeight={500}>
+                    {fav.Title}
+                  </Typography>{' '}
+                </CardContent>
+
+                <CardActions
+                  sx={{
+                    marginTop: 'auto',
+
+                    justifyContent: 'flex-end',
+                  }}
+                >
+                  <IconButton
+                    aria-label="delete"
+                    onClick={() => handleRemoveFavorite(fav.imdbID)}
+                  >
+                    <DeleteIcon fontSize="inherit" color="error" />
+                  </IconButton>
+                </CardActions>
+              </Card>
+            </Grid>
           ))}
         </Grid>
       </Grid>

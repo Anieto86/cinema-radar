@@ -56,13 +56,13 @@ export const MovieList = ({
                   >
                     <ListItem>
                       <Grid container>
-                        <Grid item lg={2} md={2} xs={12}>
+                        <Grid item lg={3} md={3} xs={12}>
                           {m.Poster !== 'N/A' ? (
                             <img
                               src={m.Poster}
                               alt="movies-poster"
                               style={{
-                                marginRight: '12px',
+                                marginRight: '15px',
                                 width: '80px',
                                 height: '80px',
                                 objectFit: 'cover',
@@ -73,7 +73,7 @@ export const MovieList = ({
                             <HideImageOutlinedIcon sx={{ fontSize: '95px' }} />
                           )}{' '}
                         </Grid>
-                        <Grid item lg={8} md={12} xs={12}>
+                        <Grid item lg={9} md={12} xs={12}>
                           <Typography variant="h5">{m.Title}</Typography>
                           <Typography variant="h6">{m.Year}</Typography>
                         </Grid>
@@ -111,6 +111,6 @@ export const CustomScrollbar = styled('div')({
   borderRight: '1px solid #c4c4c4',
   overflowY: 'scroll',
   overflowX: 'hidden',
-  maxHeight: ' calc(100vh - 10px)',
+  maxHeight: ' calc(200vh - 10px)',
   scrollbarColor: '#c4c4c4 transparent',
 });
