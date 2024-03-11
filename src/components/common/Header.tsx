@@ -56,6 +56,7 @@ export const Header = ({
                 ),
               }}
               value={movie}
+              //onBlur for avoid extra calls when the user type.
               onChange={(e) => onSearchMovie(e.target.value)}
               autoFocus
             />

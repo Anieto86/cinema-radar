@@ -1,4 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+
+import pLimit from 'p-limit';
+
 import { debounce } from 'lodash';
 import { handleYearRange } from '../utils/helpers';
 
@@ -36,14 +39,20 @@ export const useFetch = ({ name, year, type }: IProp) => {
       setLoading(true);
       try {
         const URL = `http://www.omdbapi.com/?apikey=${key}`;
+
+        const limit = pLimit(10);
+
         const fetchPromises = yearRange.map(async (years) => {
-          const response = await fetch(
-            `${URL}&s=${name}&type=${type}&y=${years}&page=${2}`
-          );
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return await response.json();
+          //p-limit to limit the big number of petitions
+          return limit(async () => {
+            const response = await fetch(
+              `${URL}&s=${name}&type=${type}&y=${years}&page=${2}`
+            );
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return await response.json();
+          });
         });
 
         const results = await Promise.allSettled(fetchPromises);
