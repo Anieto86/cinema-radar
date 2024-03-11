@@ -38,7 +38,7 @@ export const useFetch = ({ name, year, type }: IProp) => {
         const URL = `http://www.omdbapi.com/?apikey=${key}`;
         const fetchPromises = yearRange.map(async (years) => {
           const response = await fetch(
-            `${URL}&s=${name}&type=${type}&y=${years}`
+            `${URL}&s=${name}&type=${type}&y=${years}&page=${2}`
           );
           if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -61,7 +61,7 @@ export const useFetch = ({ name, year, type }: IProp) => {
       } finally {
         setLoading(false);
       }
-    }, 500),
+    }, 1000),
     [name, type, yearRange]
   );
 
