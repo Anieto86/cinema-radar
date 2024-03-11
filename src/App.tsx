@@ -8,10 +8,11 @@ import { useFetch } from './hook/useFetch';
 import { useState } from 'react';
 import { Search } from './hook/useFetch';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
+import { Loading } from './components/common/Loading';
 
 function App() {
-  const [movie, setMovie] = useState<string | undefined>('Indiana Jones');
-  const [year, setYear] = useState<number[]>([2000, 2012]);
+  const [movie, setMovie] = useState<string | undefined>('batman');
+  const [year, setYear] = useState<number[]>([2000, 2005]);
   const [type, setType] = useState<string>('movie');
   const [selectMovie, setSelectMovie] = useState<number>(0);
 
@@ -23,8 +24,8 @@ function App() {
 
   const { data, loading, error } = useFetch({ ...params });
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>error</div>;
+  if (loading) return <Loading />;
+  if (error) return <div>Something went wrong! Please try agin.</div>;
 
   const filteredData = data?.filter((d) => d.Response === 'True');
 

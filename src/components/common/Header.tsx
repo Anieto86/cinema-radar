@@ -55,8 +55,9 @@ export const Header = ({
                   <SearchIcon color="primary" sx={{ fontSize: 50, mr: 2 }} />
                 ),
               }}
-              value={movie ?? null}
+              value={movie}
               onChange={(e) => onSearchMovie(e.target.value)}
+              autoFocus
             />
           </Grid>
           <Grid item xs={2}>
@@ -74,7 +75,7 @@ export const Header = ({
               </Typography>
               <Slider
                 value={year}
-                min={1980}
+                min={1895}
                 max={2024}
                 onChange={(_event, newValue) =>
                   onSearchYear(null, newValue as number[])

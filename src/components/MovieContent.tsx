@@ -20,8 +20,8 @@ interface IProp {
 
 export const MovieContent = ({ movieId }: IProp) => {
   const [watchlist, setWatchlist] = useState(() => {
-    const data = window.localStorage.getItem('WATCHLIST_STORAGE');
-    return data ? JSON.parse(data) : {};
+    const list = window.localStorage.getItem('WATCHLIST_STORAGE');
+    return list ? JSON.parse(list) : {};
   });
 
   const [favorites, setFavorites] = useState<MovieType[]>(() => {

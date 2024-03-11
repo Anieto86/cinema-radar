@@ -71,7 +71,7 @@ export const MovieList = ({
                             />
                           ) : (
                             <HideImageOutlinedIcon sx={{ fontSize: '95px' }} />
-                          )}{' '}
+                          )}
                         </Grid>
                         <Grid item lg={9} md={12} xs={12}>
                           <Typography variant="h5">{m.Title}</Typography>
