@@ -55,9 +55,11 @@ export const Header = ({
                   <SearchIcon color="primary" sx={{ fontSize: 50, mr: 2 }} />
                 ),
               }}
-              value={movie}
+              // value={movie}
+              // onChange={(e) => onSearchMovie(e.target.value)}
               //onBlur for avoid extra calls when the user type.
-              onChange={(e) => onSearchMovie(e.target.value)}
+              defaultValue={movie}
+              onBlur={(e) => onSearchMovie(e.target.value)}
               autoFocus
             />
           </Grid>

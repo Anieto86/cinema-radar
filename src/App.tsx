@@ -1,5 +1,5 @@
 import './App.css';
-import { debounce, throttle } from 'lodash';
+import { throttle } from 'lodash';
 import { MovieList } from './components/MovieList';
 import { Header } from './components/common/Header';
 import { MovieContent } from './components/MovieContent';
@@ -36,9 +36,9 @@ function App() {
     ?.map((obj) => parseInt(obj.totalResults))
     .reduce((acc, curr) => acc + curr, 0);
 
-  const handleSearchMovie = debounce((value: string | undefined) => {
+  const handleSearchMovie = (value: string | undefined) => {
     setMovie(value);
-  }, 100);
+  };
 
   const handleSearchYear = throttle(
     (_event: Event | null, newValue: number[]) => {

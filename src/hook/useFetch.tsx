@@ -43,10 +43,10 @@ export const useFetch = ({ name, year, type }: IProp) => {
         const limit = pLimit(10);
 
         const fetchPromises = yearRange.map(async (years) => {
-          //p-limit to limit the big number of petitions
+          //p-limit to limit the big number of petitions at the same time.
           return limit(async () => {
             const response = await fetch(
-              `${URL}&s=${name}&type=${type}&y=${years}&page=${2}`
+              `${URL}&s=${name}&type=${type}&y=${years}&page=${1}`
             );
             if (!response.ok) {
               throw new Error('Network response was not ok');
