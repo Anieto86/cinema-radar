@@ -47,14 +47,20 @@ export const MovieList = ({
                     onClick={() => onSelectMovie(i)}
                     sx={{
                       '&:hover': {
-                        bgcolor: '#ebebeb',
+                        backgroundColor: '#ebebeb',
                       },
-                      py: 5,
-                      backgroundColor:
-                        selectMovie !== i ? 'transparent' : '#ebebeb',
+
+                      bgcolor:
+                        selectMovie === i
+                          ? '#ebebeb !important'
+                          : 'transparent',
                     }}
                   >
-                    <ListItem>
+                    <ListItem
+                      sx={{
+                        py: 5,
+                      }}
+                    >
                       <Grid container>
                         <Grid item lg={3} md={3} xs={12}>
                           {m.Poster !== 'N/A' ? (
