@@ -43,3 +43,13 @@
 .read-the-docs {
   color: #888;
 } */
+
+footer {
+  background-color: #1976d2;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}

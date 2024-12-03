@@ -10,10 +10,10 @@ import {
   Slider,
   Typography,
   Stack,
-} from '@mui/material';
-import TextField from '@mui/material/TextField';
-import SearchIcon from '@mui/icons-material/Search';
-import { useTheme } from '@mui/material/styles';
+} from "@mui/material";
+import TextField from "@mui/material/TextField";
+import SearchIcon from "@mui/icons-material/Search";
+import { useTheme } from "@mui/material/styles";
 
 interface IProp {
   movie?: string;
@@ -36,44 +36,90 @@ export const Header = ({
   const primary = theme.palette.primary.main;
 
   return (
-    <AppBar position="static" sx={{ bgcolor: '#666666', height: '130px' }}>
+    <AppBar
+      position="static"
+      sx={{
+        bgcolor: "#444",
+        height: "150px",
+        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)",
+        padding: "10px 20px",
+      }}
+    >
       <Toolbar>
+        <Typography
+          variant="h4"
+          component="div"
+          sx={{
+            flexGrow: 1,
+            color: "#fff",
+            fontWeight: "bold",
+            letterSpacing: "2px",
+          }}
+        >
+          Cinema Radar
+        </Typography>
         <Grid
           container
           direction="row"
           justifyContent="space-between"
           alignItems="center"
-          alignContent="center"
           wrap="nowrap"
-          sx={{ p: 1, mt: 1 }}
+          sx={{ p: 2 }}
         >
+          {/* Search Input */}
           <Grid item xs={5}>
             <TextField
               id="search-movie"
+              placeholder="Search for a movie..."
               InputProps={{
                 startAdornment: (
-                  <SearchIcon color="primary" sx={{ fontSize: 50, mr: 2 }} />
+                  <SearchIcon
+                    sx={{
+                      fontSize: 40,
+                      mr: 1,
+                      color: theme.palette.secondary.main,
+                    }}
+                  />
                 ),
+                style: { color: "#fff", fontSize: "18px" },
               }}
-              // value={movie}
-              // onChange={(e) => onSearchMovie(e.target.value)}
-              //onBlur for avoid extra calls when the user type.
               defaultValue={movie}
               onBlur={(e) => onSearchMovie(e.target.value)}
               autoFocus
+              fullWidth
+              sx={{
+                backgroundColor: "#555",
+                borderRadius: "5px",
+                "& .MuiOutlinedInput-notchedOutline": {
+                  border: "none",
+                },
+              }}
             />
           </Grid>
-          <Grid item xs={2}>
-            <Typography color="primary" sx={{ fontSize: '25px' }}>
+
+          {/* Year Selector */}
+          <Grid item xs={3}>
+            <Typography
+              sx={{
+                color: theme.palette.secondary.main,
+                fontSize: "20px",
+                fontWeight: "bold",
+                mb: 1,
+              }}
+            >
               YEAR
             </Typography>
             <Stack
-              spacing={3}
+              spacing={2}
               direction="row"
-              sx={{ mb: 1 }}
               alignItems="center"
+              sx={{
+                "& .MuiSlider-root": {
+                  color: primary,
+                },
+              }}
             >
-              <Typography color="primary" variant="h6">
+              <Typography variant="h6" color="secondary">
                 {year?.at(0)?.toString()}
               </Typography>
               <Slider
@@ -85,27 +131,31 @@ export const Header = ({
                 }
                 valueLabelDisplay="auto"
                 sx={{
-                  height: '30%',
+                  "& .MuiSlider-thumb": {
+                    bgcolor: primary,
+                    "&:hover, &:focus-visible": {
+                      boxShadow: `0 0 0 8px rgba(0, 0, 0, 0.16)`,
+                    },
+                  },
                 }}
               />
-              <Typography color="primary" variant="h6">
+              <Typography variant="h6" color="secondary">
                 {year?.at(1)?.toString()}
               </Typography>
             </Stack>
           </Grid>
 
-          <Grid
-            item
-            xs={3}
-            sx={{
-              display: 'flex',
-              justifyContent: 'flex-end',
-            }}
-          >
+          {/* Type Selector */}
+          <Grid item xs={3}>
             <FormControl>
               <FormLabel
                 id="demo-row-radio-buttons-group-label"
-                sx={{ color: primary, fontSize: '25px' }}
+                sx={{
+                  color: theme.palette.secondary.main,
+                  fontSize: "20px",
+                  fontWeight: "bold",
+                  mb: 1,
+                }}
               >
                 TYPE
               </FormLabel>
@@ -115,27 +165,53 @@ export const Header = ({
                 name="controlled-radio-buttons-group"
                 value={type}
                 onChange={(e) => onSearchMovieType(e.target.value)}
-                sx={{ color: primary }}
               >
                 <FormControlLabel
-                  value={''}
-                  control={<Radio sx={{ color: primary }} />}
+                  value=""
+                  control={
+                    <Radio
+                      sx={{
+                        color: theme.palette.secondary.main,
+                        "&.Mui-checked": { color: primary },
+                      }}
+                    />
+                  }
                   label="Any"
                 />
                 <FormControlLabel
-                  color="primary"
                   value="movie"
-                  control={<Radio sx={{ color: primary }} />}
+                  control={
+                    <Radio
+                      sx={{
+                        color: theme.palette.secondary.main,
+                        "&.Mui-checked": { color: primary },
+                      }}
+                    />
+                  }
                   label="Movies"
                 />
                 <FormControlLabel
                   value="series"
-                  control={<Radio sx={{ color: primary }} />}
+                  control={
+                    <Radio
+                      sx={{
+                        color: theme.palette.secondary.main,
+                        "&.Mui-checked": { color: primary },
+                      }}
+                    />
+                  }
                   label="Series"
                 />
                 <FormControlLabel
                   value="episode"
-                  control={<Radio sx={{ color: primary }} />}
+                  control={
+                    <Radio
+                      sx={{
+                        color: theme.palette.secondary.main,
+                        "&.Mui-checked": { color: primary },
+                      }}
+                    />
+                  }
                   label="Episodes"
                 />
               </RadioGroup>
