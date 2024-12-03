@@ -1,104 +1,92 @@
+import React, { Fragment } from "react";
 import {
-  CardMedia,
-  Divider,
   Grid,
+  Typography,
   List,
   ListItem,
   ListItemButton,
-  Typography,
+  CardMedia,
+  styled,
 } from "@mui/material";
 import HideImageOutlinedIcon from "@mui/icons-material/HideImageOutlined";
-import { Search } from "../hook/useFetch";
-import { Fragment } from "react/jsx-runtime";
-import { styled } from "@mui/system";
 import SearchOffIcon from "@mui/icons-material/SearchOff";
+import { TotalResults } from "./common/TotalResults";
 
 interface IProp {
-  selectMovie: number;
-  movies: Search[];
+  movies: { Title: string; Year: string; Poster: string; imdbID: string }[];
   totalResult: number;
-  onSelectMovie: (i: number) => void;
+  selectMovie: number | null;
+  onSelectMovie: (index: number) => void;
 }
 
-export const MovieList = ({
+export const MovieList: React.FC<IProp> = ({
   movies,
   totalResult,
   selectMovie,
   onSelectMovie,
-}: IProp) => {
+}) => {
   return (
     <CustomScrollbar>
-      <Grid item xs={12} sx={{ m: 5 }}>
-        <Typography variant="h6">{totalResult} RESULTS</Typography>
-      </Grid>
+      <TotalResults totalResult={totalResult} />
       {totalResult ? (
-        <Grid container spacing={2} sx={{ p: 2 }}>
-          <List sx={{ width: "100%" }}>
-            {movies?.map((m, i: number) => {
-              return (
-                <Fragment key={m.imdbID}>
-                  {i !== 0 && (
-                    <Grid item xs={12}>
-                      <Divider />
+        <List sx={{ width: "100%" }}>
+          {movies?.map((m, i: number) => (
+            <Fragment key={m.imdbID}>
+              <ListItemButton onClick={() => onSelectMovie(i)}>
+                <ListItem
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    p: 2,
+                    borderRadius: 2,
+                    boxShadow: 1,
+                    transition: "transform 0.3s, box-shadow 0.3s",
+                    backgroundColor:
+                      selectMovie === i ? "#e0f7fa" : "background.paper",
+                    "&:hover": {
+                      transform: "scale(1.02)",
+                      boxShadow: 3,
+                    },
+                  }}
+                >
+                  <Grid container spacing={2} alignItems="center">
+                    <Grid item lg={3} md={4} xs={12}>
+                      {m.Poster !== "N/A" ? (
+                        <CardMedia
+                          component="img"
+                          src={m.Poster}
+                          alt="movie-poster"
+                          sx={{
+                            borderRadius: 2,
+                            height: "150px",
+                            objectFit: "cover",
+                          }}
+                        />
+                      ) : (
+                        <HideImageOutlinedIcon sx={{ fontSize: "95px" }} />
+                      )}
                     </Grid>
-                  )}
-
-                  <ListItemButton onClick={() => onSelectMovie(i)}>
-                    <ListItem
-                      sx={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        p: 2,
-                        borderRadius: 2,
-                        boxShadow: 1,
-                        transition: "transform 0.3s, box-shadow 0.3s",
-                        backgroundColor: selectMovie === i ? "#e0f7fa" : "#fff",
-                        "&:hover": {
-                          transform: "scale(1.02)",
-                          boxShadow: 3,
-                        },
-                      }}
-                    >
-                      <Grid container spacing={2} alignItems="center">
-                        <Grid item lg={3} md={4} xs={12}>
-                          {m.Poster !== "N/A" ? (
-                            <CardMedia
-                              component="img"
-                              src={m.Poster}
-                              alt="movie-poster"
-                              sx={{
-                                borderRadius: 2,
-                                height: "150px",
-                                objectFit: "cover",
-                              }}
-                            />
-                          ) : (
-                            <HideImageOutlinedIcon sx={{ fontSize: "95px" }} />
-                          )}
-                        </Grid>
-                        <Grid item lg={9} md={8} xs={12}>
-                          <Typography variant="h5" fontWeight={600}>
-                            {m.Title}
-                          </Typography>
-                          <Typography variant="h6" color="textSecondary">
-                            {m.Year}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                    </ListItem>
-                  </ListItemButton>
-                </Fragment>
-              );
-            })}
-          </List>
-        </Grid>
+                    <Grid item lg={9} md={8} xs={12}>
+                      <Typography variant="h5" fontWeight={600}>
+                        {m.Title}
+                      </Typography>
+                      <Typography variant="h6" color="textSecondary">
+                        {m.Year}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </ListItem>
+              </ListItemButton>
+            </Fragment>
+          ))}
+        </List>
       ) : (
         <Grid
           container
           display="flex"
           direction="column"
-          justifyContent="flex-start"
+          justifyContent="center"
           alignItems="center"
           spacing={2}
           sx={{ p: 2, my: 2, height: "100vh" }}
@@ -107,7 +95,7 @@ export const MovieList = ({
             <SearchOffIcon sx={{ fontSize: "100px" }} />
           </Grid>
           <Grid item>
-            <Typography variant="h5">No Results found</Typography>
+            <Typography variant="h5">No Results Found</Typography>
           </Grid>
         </Grid>
       )}

@@ -2,10 +2,16 @@ import { createTheme } from "@mui/material";
 export const theme = createTheme({
   palette: {
     primary: {
-      main: "#1976d2",
+      main: "#2196f3", // Un azul más suave y moderno
+      light: "#6ec6ff", // Azul claro para hover o fondo
+      dark: "#0069c0", // Un tono más oscuro para acentos o fondos oscuros
+      contrastText: "#fff", // Blanco para asegurar legibilidad en botones
     },
     secondary: {
-      main: "#dc004e",
+      main: "#f50057", // Rosa vibrante pero equilibrado
+      light: "#ff4081", // Rosa claro para hover o estados activos
+      dark: "#c51162", // Un tono más profundo para sombras o acentos
+      contrastText: "#fff", // Blanco para mantener la legibilidad
     },
   },
   typography: {

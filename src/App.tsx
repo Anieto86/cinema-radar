@@ -1,19 +1,20 @@
-import './App.css';
-import { throttle } from 'lodash';
-import { MovieList } from './components/MovieList';
-import { Header } from './components/common/Header';
-import { MovieContent } from './components/MovieContent';
-import { Grid, Typography } from '@mui/material';
-import { useFetch } from './hook/useFetch';
-import { useState } from 'react';
-import { Search } from './hook/useFetch';
-import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
-import { Loading } from './components/common/Loading';
+import "./App.css";
+import { throttle } from "lodash";
+import { MovieList } from "./components/MovieList";
+import { Header } from "./components/Header";
+import { MovieContent } from "./components/MovieContent";
+import { Grid, Typography } from "@mui/material";
+import { useFetch } from "./hook/useFetch";
+import { useState } from "react";
+import { Search } from "./hook/useFetch";
+import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
+import { Loading } from "./components/common/Loading";
+import { Footer } from "./components/Footer";
 
 function App() {
-  const [movie, setMovie] = useState<string | undefined>('batman');
+  const [movie, setMovie] = useState<string | undefined>("batman");
   const [year, setYear] = useState<number[]>([2000, 2005]);
-  const [type, setType] = useState<string>('movie');
+  const [type, setType] = useState<string>("movie");
   const [selectMovie, setSelectMovie] = useState<number>(0);
 
   const params = {
@@ -27,7 +28,7 @@ function App() {
   if (loading) return <Loading />;
   if (error) return <div>Something went wrong! Please try agin.</div>;
 
-  const filteredData = data?.filter((d) => d.Response === 'True');
+  const filteredData = data?.filter((d) => d.Response === "True");
 
   const movies = filteredData?.flatMap((result) => result.Search || []);
   const movieId = movies?.map((result) => result.imdbID)[selectMovie] as string;
@@ -52,7 +53,12 @@ function App() {
   };
 
   return (
-    <Grid container>
+    <Grid
+      container
+      direction="row"
+      justifyContent="space-between"
+      sx={{ minHeight: "100vh" }}
+    >
       <Grid item xs={12}>
         <Header
           movie={movie}
@@ -82,7 +88,7 @@ function App() {
             justifyContent="flex-start"
             alignItems="center"
             spacing={2}
-            sx={{ p: 2, my: 2, height: '100vh' }}
+            sx={{ p: 2, my: 2, height: "100vh" }}
           >
             <Grid item>
               <Typography variant="h5">Please try again</Typography>
@@ -91,10 +97,13 @@ function App() {
               🤦‍♂️
             </Grid>
             <Grid item>
-              <InfoRoundedIcon sx={{ fontSize: '100px' }} />
+              <InfoRoundedIcon sx={{ fontSize: "100px" }} />
             </Grid>
           </Grid>
         )}
+      </Grid>
+      <Grid item xs={12} mt={20}>
+        <Footer />
       </Grid>
     </Grid>
   );

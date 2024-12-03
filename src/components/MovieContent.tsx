@@ -6,6 +6,7 @@ import { WatchList } from "./common/WatchList";
 import { MoviePlot } from "../components/MoviePlot";
 import { MovieRatings } from "./MovieRatings";
 import { FavoritesMovies } from "./FavoritesMovies";
+import { CustomScrollbar } from "./MovieList";
 interface IProp {
   movieId: string;
 }
@@ -51,101 +52,104 @@ export const MovieContent = ({ movieId }: IProp) => {
   };
 
   return (
-    <Grid
-      container
-      justifyContent="space-around"
-      alignItems="center"
-      sx={{
-        mt: 2,
-        p: 4,
-        bgcolor: "#f9f9f9", // Fondo claro para mayor contraste
-        borderRadius: 2,
-        boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
-      }}
-    >
+    <CustomScrollbar>
       <Grid
-        item
-        xs={3}
+        container
+        justifyContent="space-around"
+        alignItems="center"
         sx={{
+          mt: 2,
           p: 4,
+          bgcolor: "#f9f9f9", // Fondo claro para mayor contraste
+          borderRadius: 2,
+          boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+          height: "100%",
         }}
       >
-        {Poster !== "N/A" ? (
-          <img
-            src={Poster}
-            alt="movies-poster"
-            style={{
-              borderRadius: "5px",
-              objectFit: "cover",
-              width: "100%",
-              height: "auto",
-            }}
-          />
-        ) : (
-          <HideImageOutlinedIcon sx={{ fontSize: "200px", ml: 5, mt: 5 }} />
-        )}
-      </Grid>
-
-      <Grid item lg={9} md={12} xs={12} sx={{ minHeight: "600px", p: 2 }}>
         <Grid
-          container
-          display="flex"
-          justifyContent="flex-end"
-          alignItems="flex-end"
-        >
-          <Grid item>
-            <WatchList
-              imdbID={imdbID}
-              watchlist={watchlist}
-              handleWatchlist={setWatchlist}
-              favorites={favorites as MovieType[]}
-              addFavorite={() => handleFavorites(data)}
-              removeFavorite={handleRemoveFavorite}
-            ></WatchList>
-          </Grid>
-        </Grid>
-        <Typography variant="h2" fontWeight={700} sx={{ my: 10 }}>
-          {Title}
-        </Typography>
-
-        <Typography
-          variant="h5"
+          item
+          xs={3}
           sx={{
-            my: 3,
-            p: "10px",
+            p: 4,
           }}
         >
-          <span
-            style={{
-              border: "2px solid black",
-              padding: 5,
-              margin: 5,
-              borderRadius: "5px",
+          {Poster !== "N/A" ? (
+            <img
+              src={Poster}
+              alt="movies-poster"
+              style={{
+                borderRadius: "5px",
+                objectFit: "cover",
+                width: "100%",
+                height: "auto",
+              }}
+            />
+          ) : (
+            <HideImageOutlinedIcon sx={{ fontSize: "200px", ml: 5, mt: 5 }} />
+          )}
+        </Grid>
+
+        <Grid item lg={9} md={12} xs={12} sx={{ minHeight: "600px", p: 2 }}>
+          <Grid
+            container
+            display="flex"
+            justifyContent="flex-end"
+            alignItems="flex-end"
+          >
+            <Grid item>
+              <WatchList
+                imdbID={imdbID}
+                watchlist={watchlist}
+                handleWatchlist={setWatchlist}
+                favorites={favorites as MovieType[]}
+                addFavorite={() => handleFavorites(data)}
+                removeFavorite={handleRemoveFavorite}
+              ></WatchList>
+            </Grid>
+          </Grid>
+          <Typography variant="h2" fontWeight={700} sx={{ my: 10 }}>
+            {Title}
+          </Typography>
+
+          <Typography
+            variant="h5"
+            sx={{
+              my: 3,
+              p: "10px",
             }}
           >
-            {Rated}
-          </span>
-          {` ${Year} · ${Genre} · ${Runtime}`}
-        </Typography>
-        <Typography variant="h5" sx={{ ml: 2 }}>
-          {Actors}
-        </Typography>
-      </Grid>
+            <span
+              style={{
+                border: "2px solid black",
+                padding: 5,
+                margin: 5,
+                borderRadius: "5px",
+              }}
+            >
+              {Rated}
+            </span>
+            {` ${Year} · ${Genre} · ${Runtime}`}
+          </Typography>
+          <Typography variant="h5" sx={{ ml: 2 }}>
+            {Actors}
+          </Typography>
+        </Grid>
 
-      {/* Plot Section */}
-      <Grid item xs={12} md={12} mb={5}>
-        <MoviePlot movieDescription={Plot} />
-      </Grid>
+        {/* Plot Section */}
+        <Grid item xs={12} md={12} mb={5}>
+          <MoviePlot movieDescription={Plot} />
+        </Grid>
 
-      {/* Ratings Section */}
-      <Grid item xs={12} md={8}>
-        <MovieRatings Ratings={Ratings} />
-      </Grid>
+        {/* Ratings Section */}
+        <Grid item xs={12} md={8}>
+          <MovieRatings Ratings={Ratings} />
+        </Grid>
 
-      <FavoritesMovies
-        favorites={favorites}
-        handleRemoveFavorite={handleRemoveFavorite}
-      />
-    </Grid>
+        <FavoritesMovies
+          favorites={favorites}
+          handleRemoveFavorite={handleRemoveFavorite}
+        />
+      </Grid>
+    </CustomScrollbar>
   );
 };
