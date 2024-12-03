@@ -1,30 +1,58 @@
-# React + TypeScript + Vite
+# Cinema Radar
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Cinema Radar is a web application for searching and listing movies using the OMDb API.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Search for movies by name, type, and year range.
+- View movie details.
+- Add movies to a favorites list.
+- Responsive user interface.
 
-## Expanding the ESLint configuration
+## Technologies Used
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- React
+- TypeScript
+- Vite
+- Material UI
+- Lodash
+- p-limit
 
-- Configure the top-level `parserOptions` property like this:
+## Installation
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+1. Clone the repository:
+    ```sh
+    git clone https://github.com/your-username/cinema-radar.git
+    cd cinema-radar
+    ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+2. Install the dependencies:
+    ```sh
+    npm install
+    ```
+
+3. Create a `.env` file in the root of the project and add your OMDb API key:
+    ```env
+    VITE_REACT_APP_OMDb_API_KEY=your_api_key
+    ```
+
+## Available Scripts
+
+- `npm run dev`: Starts the development server.
+- `npm run build`: Builds the application for production.
+- `npm run preview`: Previews the production build.
+- `npm run lint`: Runs ESLint to check the code.
+
+## Usage
+
+1. Start the development server:
+    ```sh
+    npm run dev
+    ```
+
+2. Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
+
+## License
+
+This project is licensed under the MIT License.
+
