@@ -44,7 +44,7 @@ export const FavoritesMovies: React.FC<FavoritesMoviesProps> = ({
         boxShadow: 3,
         bgcolor: "#fafafa",
         borderRadius: 3,
-        height: "75vh",
+        height: "auto",
       }}
     >
       <Grid item xs={12} textAlign="center" mt={3}>
@@ -54,6 +54,7 @@ export const FavoritesMovies: React.FC<FavoritesMoviesProps> = ({
           </Typography>
         )}
       </Grid>
+
       <Swiper
         modules={[Pagination, A11y]}
         spaceBetween={50}
