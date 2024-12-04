@@ -14,6 +14,7 @@ import {
 import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
 import { useTheme } from "@mui/material/styles";
+import { CinemaRadarIcon } from "../assets/Icon/CinemaRadarIcon";
 
 interface IProp {
   movie?: string;
@@ -40,12 +41,11 @@ export const Header = ({
       position="static"
       sx={{
         bgcolor: "#444",
-        height: "150px",
-        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)",
-        padding: "10px 20px",
       }}
     >
       <Toolbar>
+        <CinemaRadarIcon />
+
         <Typography
           variant="h4"
           component="div"

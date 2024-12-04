@@ -8,6 +8,7 @@ import {
   CardActions,
   IconButton,
   Box,
+  Button,
 } from "@mui/material";
 import HideImageOutlinedIcon from "@mui/icons-material/HideImageOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -54,9 +55,8 @@ export const FavoritesMovies: React.FC<FavoritesMoviesProps> = ({
                 src={fav.Poster}
                 alt="movie-poster"
                 sx={{
-                  borderRadius: "5px 5px 0 0",
-                  minHeight: "400px",
-                  objectFit: "cover",
+                  height: "100%",
+                  // objectFit: "cover",
                 }}
               />
             ) : (
@@ -67,7 +67,6 @@ export const FavoritesMovies: React.FC<FavoritesMoviesProps> = ({
                   alignItems: "center",
                   minHeight: "400px",
                   bgcolor: "#e0e0e0",
-                  borderRadius: "5px 5px 0 0",
                 }}
               >
                 <HideImageOutlinedIcon
@@ -75,17 +74,30 @@ export const FavoritesMovies: React.FC<FavoritesMoviesProps> = ({
                 />
               </Box>
             )}
-            <CardContent sx={{ flexGrow: 1 }}>
-              <Typography textAlign="center" fontWeight={500}>
+            <CardContent
+              sx={{
+                flexGrow: 1,
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+              }}
+            >
+              <Typography
+                textAlign="center"
+                variant="body1"
+                sx={{ color: "text.secondary" }}
+              >
                 {fav.Title}
               </Typography>
             </CardContent>
-            <CardActions sx={{ justifyContent: "flex-end" }}>
+            <CardActions sx={{ justifyContent: "space-between", p: 2 }}>
+              <Button size="small">Show More</Button>
               <IconButton
                 aria-label="delete"
                 onClick={() => handleRemoveFavorite(fav.imdbID)}
+                sx={{ color: "error.main" }}
               >
-                <DeleteIcon fontSize="inherit" color="error" />
+                <DeleteIcon fontSize="inherit" />
               </IconButton>
             </CardActions>
           </Card>

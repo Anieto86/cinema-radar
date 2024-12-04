@@ -2,16 +2,16 @@ import { createTheme } from "@mui/material";
 export const theme = createTheme({
   palette: {
     primary: {
-      main: "#2196f3", // Un azul más suave y moderno
-      light: "#6ec6ff", // Azul claro para hover o fondo
-      dark: "#0069c0", // Un tono más oscuro para acentos o fondos oscuros
-      contrastText: "#fff", // Blanco para asegurar legibilidad en botones
+      main: "#ff9800", // Color principal del icono
+      light: "#ffb74d", // Color más claro
+      dark: "#f57c00", // Color más oscuro
+      contrastText: "#fff", // Texto en contraste
     },
     secondary: {
-      main: "#f50057", // Rosa vibrante pero equilibrado
-      light: "#ff4081", // Rosa claro para hover o estados activos
-      dark: "#c51162", // Un tono más profundo para sombras o acentos
-      contrastText: "#fff", // Blanco para mantener la legibilidad
+      main: "#2196f3", // Nuevo color secundario (azul)
+      light: "#64b5f6", // Color más claro
+      dark: "#1976d2", // Color más oscuro
+      contrastText: "#fff", // Texto en contraste
     },
   },
   typography: {
@@ -26,7 +26,6 @@ export const theme = createTheme({
           },
           "& .MuiInputBase-input": {
             color: "#fefefe",
-            fontSize: "30px",
           },
           "& .MuiOutlinedInput-root": {
             "& fieldset": {

@@ -29,7 +29,7 @@ export const MovieList: React.FC<IProp> = ({
     <CustomScrollbar>
       <TotalResults totalResult={totalResult} />
       {totalResult ? (
-        <List sx={{ width: "100%" }}>
+        <List sx={{ width: "100%", height: "auto" }}>
           {movies?.map((m, i: number) => (
             <Fragment key={m.imdbID}>
               <ListItemButton onClick={() => onSelectMovie(i)}>
@@ -107,7 +107,7 @@ export const CustomScrollbar = styled("div")({
   borderRight: "1px solid #c4c4c4",
   overflowY: "scroll",
   overflowX: "hidden",
-  maxHeight: "calc(200vh - 10px)",
+  maxHeight: "calc(220vh - 10px)",
   scrollbarColor: "#c4c4c4 transparent",
   "&::-webkit-scrollbar": {
     width: "8px",

@@ -13,8 +13,7 @@ export const MoviePlot = ({ movieDescription }: PlotProps) => {
         bgcolor: "#f9fafb",
         borderRadius: 3,
         boxShadow: 3,
-
-        margin: "0 auto", // Centra el contenido
+        margin: "0 auto",
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",

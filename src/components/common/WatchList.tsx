@@ -1,7 +1,7 @@
-import { Button, Typography } from '@mui/material';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import { MovieType } from '../../hook/useFetchMovie';
+import { Button, Typography } from "@mui/material";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import { MovieType } from "../../hook/useFetchMovie";
 
 interface IProp {
   imdbID: string;
@@ -32,7 +32,7 @@ export const WatchList = ({
       };
 
       window.localStorage.setItem(
-        'WATCHLIST_STORAGE',
+        "WATCHLIST_STORAGE",
         JSON.stringify(updatedWatchlist)
       );
 
@@ -55,8 +55,8 @@ export const WatchList = ({
       size="large"
       sx={{
         p: 2,
-        border: '1px solid',
-        borderRadius: '5px',
+        border: "1px solid",
+        borderRadius: "5px",
         fontWeight: 600,
       }}
       onClick={handleToggle}

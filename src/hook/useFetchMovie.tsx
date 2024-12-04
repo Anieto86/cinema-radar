@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from "react";
 const key = import.meta.env.VITE_REACT_APP_OMDb_API_KEY;
 
 interface RatingType {
@@ -17,6 +17,10 @@ export interface MovieType {
   Plot: string;
   Rated: string;
   Runtime: string;
+  Awards: string;
+  Country: string;
+  Language: string;
+  Director: string;
 }
 
 export const useFetchMovie = (id: string) => {

@@ -52,60 +52,59 @@ function App() {
     if (movie) setType(value);
   };
 
+  console.log(data);
+
   return (
-    <Grid
-      container
-      direction="row"
-      justifyContent="space-between"
-      sx={{ minHeight: "100vh" }}
-    >
+    <>
+      <Grid container>
+        <Grid item xs={12}>
+          <Header
+            movie={movie}
+            onSearchMovie={handleSearchMovie}
+            type={type}
+            onSearchMovieType={handleSearchMovieType}
+            year={year}
+            onSearchYear={(_e, newValue) => handleSearchYear(_e, newValue)}
+          />
+        </Grid>
+        <Grid item xs={4}>
+          <MovieList
+            movies={movies as Search[]}
+            totalResult={totalResult as number}
+            selectMovie={selectMovie}
+            onSelectMovie={(index: number) => setSelectMovie(index)}
+          />
+        </Grid>
+        <Grid item xs={8}>
+          {totalResult ? (
+            <MovieContent movieId={movieId} />
+          ) : (
+            <Grid
+              container
+              display="flex"
+              direction="column"
+              justifyContent="flex-start"
+              alignItems="center"
+              spacing={2}
+              sx={{ p: 2, my: 2, height: "100vh" }}
+            >
+              <Grid item>
+                <Typography variant="h5">Please try again</Typography>
+              </Grid>
+              <Grid item style={{ fontSize: 70 }}>
+                🤦‍♂️
+              </Grid>
+              <Grid item>
+                <InfoRoundedIcon sx={{ fontSize: "100px" }} />
+              </Grid>
+            </Grid>
+          )}
+        </Grid>
+      </Grid>
       <Grid item xs={12}>
-        <Header
-          movie={movie}
-          onSearchMovie={handleSearchMovie}
-          type={type}
-          onSearchMovieType={handleSearchMovieType}
-          year={year}
-          onSearchYear={(_e, newValue) => handleSearchYear(_e, newValue)}
-        />
-      </Grid>
-      <Grid item xs={4}>
-        <MovieList
-          movies={movies as Search[]}
-          totalResult={totalResult as number}
-          selectMovie={selectMovie}
-          onSelectMovie={(index: number) => setSelectMovie(index)}
-        />
-      </Grid>
-      <Grid item xs={8}>
-        {totalResult ? (
-          <MovieContent movieId={movieId} />
-        ) : (
-          <Grid
-            container
-            display="flex"
-            direction="column"
-            justifyContent="flex-start"
-            alignItems="center"
-            spacing={2}
-            sx={{ p: 2, my: 2, height: "100vh" }}
-          >
-            <Grid item>
-              <Typography variant="h5">Please try again</Typography>
-            </Grid>
-            <Grid item style={{ fontSize: 70 }}>
-              🤦‍♂️
-            </Grid>
-            <Grid item>
-              <InfoRoundedIcon sx={{ fontSize: "100px" }} />
-            </Grid>
-          </Grid>
-        )}
-      </Grid>
-      <Grid item xs={12} mt={20}>
         <Footer />
       </Grid>
-    </Grid>
+    </>
   );
 }
 

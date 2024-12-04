@@ -1,57 +1,62 @@
-import React from "react";
-import { Box, Typography, Link, Container, IconButton } from "@mui/material";
+import { Box, Typography, Link, IconButton, Grid } from "@mui/material";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from "@mui/icons-material/Twitter";
+import { CinemaRadarIcon } from "../assets/Icon/CinemaRadarIcon";
 
 export const Footer = () => {
   return (
-    <Box
-      component="footer"
+    <Grid
+      container
+      justifyContent="space-evenly"
+      alignItems="center"
       sx={{
-        py: 3,
+        py: 4,
         px: 2,
+        mt: "auto",
         backgroundColor: (theme) =>
-          theme.palette.mode === "light"
-            ? theme.palette.primary.light
-            : theme.palette.primary.dark,
+          theme.palette.mode === "light" ? "#444" : "#0d47a1",
         color: (theme) => theme.palette.primary.contrastText,
       }}
     >
-      <Container maxWidth="lg">
-        <Typography variant="body1" align="center">
-          © {new Date().getFullYear()} Cinema Radar. All rights reserved.
-        </Typography>
-        <Box sx={{ display: "flex", justifyContent: "center", mt: 1 }}>
+      <Grid item>
+        <CinemaRadarIcon />
+        <Typography variant="h6">Cinema Radar</Typography>{" "}
+      </Grid>
+      <Grid item>
+        <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
           <IconButton
             aria-label="GitHub"
             href="https://github.com/your-profile"
             target="_blank"
             rel="noopener"
-            sx={{ color: "inherit" }}
+            sx={{ color: "inherit", mx: 1 }}
           >
-            <GitHubIcon />
+            <GitHubIcon fontSize="large" />
           </IconButton>
           <IconButton
             aria-label="LinkedIn"
             href="https://www.linkedin.com/in/your-profile"
             target="_blank"
             rel="noopener"
-            sx={{ color: "inherit" }}
+            sx={{ color: "inherit", mx: 1 }}
           >
-            <LinkedInIcon />
+            <LinkedInIcon fontSize="large" />
           </IconButton>
           <IconButton
             aria-label="Twitter"
             href="https://twitter.com/your-profile"
             target="_blank"
             rel="noopener"
-            sx={{ color: "inherit" }}
+            sx={{ color: "inherit", mx: 1 }}
           >
-            <TwitterIcon />
+            <TwitterIcon fontSize="large" />
           </IconButton>
         </Box>
-        <Typography variant="body2" align="center" sx={{ mt: 1 }}>
+        <Typography variant="body2" align="center" sx={{ mb: 1 }}>
+          © {new Date().getFullYear()} Cinema Radar. All rights reserved.
+        </Typography>
+        <Typography variant="body2" align="center">
           {"Built with "}
           <Link color="inherit" href="https://reactjs.org/">
             React
@@ -62,9 +67,7 @@ export const Footer = () => {
           </Link>
           {"."}
         </Typography>
-      </Container>
-    </Box>
+      </Grid>
+    </Grid>
   );
 };
-
-export default Footer;
