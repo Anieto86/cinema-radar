@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import HideImageOutlinedIcon from "@mui/icons-material/HideImageOutlined";
 import SearchOffIcon from "@mui/icons-material/SearchOff";
-import { TotalResults } from "./common/TotalResults";
+import { TotalResults } from "../components/common/TotalResults";
 
 interface IProp {
   movies: { Title: string; Year: string; Poster: string; imdbID: string }[];
@@ -107,7 +107,7 @@ export const CustomScrollbar = styled("div")({
   borderRight: "1px solid #c4c4c4",
   overflowY: "scroll",
   overflowX: "hidden",
-  maxHeight: "calc(220vh - 10px)",
+  maxHeight: "calc(180vh - 10px)",
   scrollbarColor: "#c4c4c4 transparent",
   "&::-webkit-scrollbar": {
     width: "8px",

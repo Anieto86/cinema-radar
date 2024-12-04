@@ -11,17 +11,21 @@ export const Footer = () => {
       justifyContent="space-evenly"
       alignItems="center"
       sx={{
-        py: 4,
-        px: 2,
-        mt: "auto",
         backgroundColor: (theme) =>
           theme.palette.mode === "light" ? "#444" : "#0d47a1",
         color: (theme) => theme.palette.primary.contrastText,
       }}
     >
       <Grid item>
-        <CinemaRadarIcon />
-        <Typography variant="h6">Cinema Radar</Typography>{" "}
+        <Grid
+          container
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <CinemaRadarIcon />
+          <Typography variant="h6">Cinema Radar</Typography>{" "}
+        </Grid>
       </Grid>
       <Grid item>
         <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>

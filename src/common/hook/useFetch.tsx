@@ -1,9 +1,7 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-
-import pLimit from 'p-limit';
-
-import { debounce } from 'lodash';
-import { handleYearRange } from '../utils/helpers';
+import { useCallback, useEffect, useMemo, useState } from "react";
+import pLimit from "p-limit";
+import { debounce } from "lodash";
+import { handleYearRange } from "../utils/helpers";
 
 const key = import.meta.env.VITE_REACT_APP_OMDb_API_KEY;
 
@@ -12,7 +10,7 @@ interface IProp {
   year: number[];
   type?: string;
 }
-export interface Search {
+export interface SearchType {
   Title: string;
   Year: string;
   imdbID: string;
@@ -20,14 +18,14 @@ export interface Search {
   Poster: string;
 }
 
-export interface SearchResult {
-  Search: Search[];
+export interface SearchResultType {
+  Search: SearchType[];
   totalResults: string;
   Response: string;
 }
 
 export const useFetch = ({ name, year, type }: IProp) => {
-  const [data, setData] = useState<SearchResult[] | null>(null);
+  const [data, setData] = useState<SearchResultType[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
@@ -49,7 +47,7 @@ export const useFetch = ({ name, year, type }: IProp) => {
               `${URL}&s=${name}&type=${type}&y=${years}&page=${1}`
             );
             if (!response.ok) {
-              throw new Error('Network response was not ok');
+              throw new Error("Network response was not ok");
             }
             return await response.json();
           });
@@ -58,12 +56,12 @@ export const useFetch = ({ name, year, type }: IProp) => {
         const results = await Promise.allSettled(fetchPromises);
         const successfulResults = results
           .filter(
-            (result): result is PromiseFulfilledResult<SearchResult> =>
-              result.status === 'fulfilled'
+            (result): result is PromiseFulfilledResult<SearchResultType> =>
+              result.status === "fulfilled"
           )
           .map((result) => result.value);
 
-        setData(successfulResults as SearchResult[]);
+        setData(successfulResults as SearchResultType[]);
       } catch (error) {
         setError(error as Error | null);
         setLoading(false);

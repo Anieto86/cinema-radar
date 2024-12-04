@@ -1,12 +1,12 @@
 import { Grid, Typography } from "@mui/material";
 import HideImageOutlinedIcon from "@mui/icons-material/HideImageOutlined";
-import { MovieType, useFetchMovie } from "../hook/useFetchMovie";
 import { useState, useEffect } from "react";
-import { WatchList } from "./common/WatchList";
+import { WatchList } from "../components/common/WatchList";
 import { MoviePlot } from "../components/MoviePlot";
-import { MovieRatings } from "./MovieRatings";
-import { FavoritesMovies } from "./FavoritesMovies";
+import { MovieRatings } from "../components/MovieRatings";
+import { FavoritesMovies } from "../components/FavoritesMovies";
 import { CustomScrollbar } from "./MovieList";
+import { MovieType, useFetchMovie } from "../common/hook/useFetchMovie";
 interface IProp {
   movieId: string;
   isShowMore: boolean;
@@ -172,11 +172,13 @@ export const MovieContent = ({ movieId, isShowMore, setIsShowMore }: IProp) => {
           <MovieRatings Ratings={Ratings} />
         </Grid>
 
-        <FavoritesMovies
-          favorites={favorites}
-          handleShowFavorite={handleShowFavorite}
-          handleRemoveFavorite={handleRemoveFavorite}
-        />
+        <Grid item xs={12} md={12}>
+          <FavoritesMovies
+            favorites={favorites}
+            handleShowFavorite={handleShowFavorite}
+            handleRemoveFavorite={handleRemoveFavorite}
+          />
+        </Grid>
       </Grid>
     </CustomScrollbar>
   );

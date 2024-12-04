@@ -25,9 +25,19 @@ export const FavoritesMovies: React.FC<FavoritesMoviesProps> = ({
   handleShowFavorite,
 }) => {
   return (
-    <Grid container spacing={3} sx={{ my: 4 }} justifyContent="center">
+    <Grid
+      container
+      spacing={1}
+      sx={{
+        mt: 2,
+        padding: 3,
+        boxShadow: 3,
+        bgcolor: "#fafafa",
+        borderRadius: 3,
+      }}
+    >
       <Grid item xs={12} textAlign="center">
-        {favorites.length !== 0 && (
+        {favorites.length > 0 && (
           <Typography variant="h4" fontWeight={600} gutterBottom>
             My List
           </Typography>
@@ -43,7 +53,6 @@ export const FavoritesMovies: React.FC<FavoritesMoviesProps> = ({
               display: "flex",
               flexDirection: "column",
               borderRadius: 2,
-              boxShadow: 3,
               transition: "transform 0.3s, box-shadow 0.3s",
               "&:hover": {
                 transform: "scale(1.05)",

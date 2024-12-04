@@ -1,15 +1,14 @@
-import "./App.css";
+import { Grid } from "@mui/material";
 import { throttle } from "lodash";
-import { MovieList } from "./components/MovieList";
-import { Header } from "./components/Header";
-import { MovieContent } from "./components/MovieContent";
-import { Grid, Typography } from "@mui/material";
-import { useFetch } from "./hook/useFetch";
 import { useState } from "react";
-import { Search } from "./hook/useFetch";
-import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
+import "./App.css";
+import { SearchType, useFetch } from "./common/hook/useFetch";
 import { Loading } from "./components/common/Loading";
-import { Footer } from "./components/Footer";
+import { MovieContent } from "./Pages/MovieContent";
+import { MovieList } from "./Pages/MovieList";
+import { Footer } from "./layouts/Footer";
+import { Header } from "./layouts/Header";
+import { NoResult } from "./components/common/NoResult";
 
 function App() {
   const [movie, setMovie] = useState<string | undefined>("batman");
@@ -59,60 +58,40 @@ function App() {
   };
 
   return (
-    <>
-      <Grid container>
-        <Grid item xs={12}>
-          <Header
-            movie={movie}
-            onSearchMovie={handleSearchMovie}
-            type={type}
-            onSearchMovieType={handleSearchMovieType}
-            year={year}
-            onSearchYear={(_e, newValue) => handleSearchYear(_e, newValue)}
+    <Grid container>
+      <Grid item xs={12}>
+        <Header
+          movie={movie}
+          onSearchMovie={handleSearchMovie}
+          type={type}
+          onSearchMovieType={handleSearchMovieType}
+          year={year}
+          onSearchYear={(_e, newValue) => handleSearchYear(_e, newValue)}
+        />
+      </Grid>
+      <Grid item xs={4}>
+        <MovieList
+          movies={movies as SearchType[]}
+          totalResult={totalResult as number}
+          selectMovie={selectMovie}
+          onSelectMovie={(index: number) => handleSelectMovie(index)}
+        />
+      </Grid>
+      <Grid item xs={8}>
+        {totalResult ? (
+          <MovieContent
+            movieId={movieId}
+            isShowMore={isShowMore}
+            setIsShowMore={setIsShowMore}
           />
-        </Grid>
-        <Grid item xs={4}>
-          <MovieList
-            movies={movies as Search[]}
-            totalResult={totalResult as number}
-            selectMovie={selectMovie}
-            onSelectMovie={(index: number) => handleSelectMovie(index)}
-          />
-        </Grid>
-        <Grid item xs={8}>
-          {totalResult ? (
-            <MovieContent
-              movieId={movieId}
-              isShowMore={isShowMore}
-              setIsShowMore={setIsShowMore}
-            />
-          ) : (
-            <Grid
-              container
-              display="flex"
-              direction="column"
-              justifyContent="flex-start"
-              alignItems="center"
-              spacing={2}
-              sx={{ p: 2, my: 2, height: "100vh" }}
-            >
-              <Grid item>
-                <Typography variant="h5">Please try again</Typography>
-              </Grid>
-              <Grid item style={{ fontSize: 70 }}>
-                🤦‍♂️
-              </Grid>
-              <Grid item>
-                <InfoRoundedIcon sx={{ fontSize: "100px" }} />
-              </Grid>
-            </Grid>
-          )}
-        </Grid>
+        ) : (
+          <NoResult />
+        )}
       </Grid>
       <Grid item xs={12}>
         <Footer />
       </Grid>
-    </>
+    </Grid>
   );
 }
 
