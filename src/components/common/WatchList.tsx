@@ -1,7 +1,7 @@
 import { Button, Typography } from "@mui/material";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import { MovieType } from "../../hook/useFetchMovie";
+import { MovieType } from "../../common/hook/useFetchMovie";
 
 interface IProp {
   imdbID: string;
