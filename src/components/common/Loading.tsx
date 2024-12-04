@@ -10,8 +10,8 @@ export const Loading = () => {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh", // Centramos verticalmente ocupando toda la pantalla
-        bgcolor: "#f4f4f4", // Fondo suave
+        height: "100vh",
+        bgcolor: "#f4f4f4",
       }}
     >
       <CircularProgress
@@ -25,7 +25,7 @@ export const Loading = () => {
       <Typography
         variant="h4"
         sx={{
-          color: "#555", // Color del texto
+          color: "#555",
           fontWeight: "bold",
           letterSpacing: "1px",
           textTransform: "uppercase",
