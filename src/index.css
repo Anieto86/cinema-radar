@@ -2,7 +2,6 @@
   overflow: hidden;
 } */
 
-
 :root {
   /* font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif; */
   line-height: 1.5;
@@ -16,17 +15,14 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-
 body {
   margin: 0;
   /* display: flex;
   place-items: center; */
   /* min-width: 320px;
   min-height: 100vh; */
-  overflow-Y: scroll
+  overflow-y: scroll;
 }
-
-
 
 /* ::-webkit-scrollbar-thumb:window-inactive {
   background: rgba(72, 68, 68, 0.4);
@@ -72,3 +68,7 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 } */
+
+body {
+  font-family: "Onest Variable", sans-serif;
+}

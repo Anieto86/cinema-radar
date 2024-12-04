@@ -1,4 +1,5 @@
 import { createTheme } from "@mui/material";
+import "@fontsource-variable/onest";
 export const theme = createTheme({
   palette: {
     primary: {
@@ -15,7 +16,7 @@ export const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: "Roboto, Arial, sans-serif",
+    fontFamily: "Onest Variable, sans-serif",
   },
   components: {
     MuiTextField: {
