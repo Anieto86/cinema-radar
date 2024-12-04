@@ -16,6 +16,7 @@ function App() {
   const [year, setYear] = useState<number[]>([2000, 2005]);
   const [type, setType] = useState<string>("movie");
   const [selectMovie, setSelectMovie] = useState<number>(0);
+  const [isShowMore, setIsShowMore] = useState<boolean>(false);
 
   const params = {
     name: movie,
@@ -52,7 +53,10 @@ function App() {
     if (movie) setType(value);
   };
 
-  console.log(data);
+  const handleSelectMovie = (index: number) => {
+    setSelectMovie(index);
+    setIsShowMore(false);
+  };
 
   return (
     <>
@@ -72,12 +76,16 @@ function App() {
             movies={movies as Search[]}
             totalResult={totalResult as number}
             selectMovie={selectMovie}
-            onSelectMovie={(index: number) => setSelectMovie(index)}
+            onSelectMovie={(index: number) => handleSelectMovie(index)}
           />
         </Grid>
         <Grid item xs={8}>
           {totalResult ? (
-            <MovieContent movieId={movieId} />
+            <MovieContent
+              movieId={movieId}
+              isShowMore={isShowMore}
+              setIsShowMore={setIsShowMore}
+            />
           ) : (
             <Grid
               container

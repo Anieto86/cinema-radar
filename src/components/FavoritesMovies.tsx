@@ -16,11 +16,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 interface FavoritesMoviesProps {
   favorites: { Poster: string; Title: string; imdbID: string }[];
   handleRemoveFavorite: (id: string) => void;
+  handleShowFavorite: (id: string, flag: boolean) => void;
 }
 
 export const FavoritesMovies: React.FC<FavoritesMoviesProps> = ({
   favorites,
   handleRemoveFavorite,
+  handleShowFavorite,
 }) => {
   return (
     <Grid container spacing={3} sx={{ my: 4 }} justifyContent="center">
@@ -91,7 +93,12 @@ export const FavoritesMovies: React.FC<FavoritesMoviesProps> = ({
               </Typography>
             </CardContent>
             <CardActions sx={{ justifyContent: "space-between", p: 2 }}>
-              <Button size="small">Show More</Button>
+              <Button
+                aria-label="show more"
+                onClick={() => handleShowFavorite(fav.imdbID, true)}
+              >
+                Show More
+              </Button>
               <IconButton
                 aria-label="delete"
                 onClick={() => handleRemoveFavorite(fav.imdbID)}

@@ -9,20 +9,23 @@ import { FavoritesMovies } from "./FavoritesMovies";
 import { CustomScrollbar } from "./MovieList";
 interface IProp {
   movieId: string;
+  isShowMore: boolean;
+  setIsShowMore: (flag: boolean) => void;
 }
 
-export const MovieContent = ({ movieId }: IProp) => {
+export const MovieContent = ({ movieId, isShowMore, setIsShowMore }: IProp) => {
+  const [showMore, setShowMore] = useState<string>("");
   const [watchlist, setWatchlist] = useState(() => {
     const list = window.localStorage.getItem("WATCHLIST_STORAGE");
     return list ? JSON.parse(list) : {};
   });
-
   const [favorites, setFavorites] = useState<MovieType[]>(() => {
     const fav = window.localStorage.getItem("FAVORITES_STORAGE");
     return fav !== null ? JSON.parse(fav) : [];
   });
 
-  const { data } = useFetchMovie(movieId as string);
+  const id = isShowMore ? showMore : movieId;
+  const { data } = useFetchMovie(id);
   const {
     Title,
     Year,
@@ -53,6 +56,11 @@ export const MovieContent = ({ movieId }: IProp) => {
     const myList = favorites.filter((movie) => movie.imdbID !== imdbID);
     setFavorites(myList);
     setWatchlist({ ...watchlist, [imdbID]: false });
+  };
+
+  const handleShowFavorite = (imdbID: string, flag: boolean) => {
+    setShowMore(imdbID);
+    setIsShowMore(flag);
   };
 
   return (
@@ -166,6 +174,7 @@ export const MovieContent = ({ movieId }: IProp) => {
 
         <FavoritesMovies
           favorites={favorites}
+          handleShowFavorite={handleShowFavorite}
           handleRemoveFavorite={handleRemoveFavorite}
         />
       </Grid>
