@@ -5,7 +5,7 @@ import { WatchList } from "../components/common/WatchList";
 import { MoviePlot } from "../components/MoviePlot";
 import { MovieRatings } from "../components/MovieRatings";
 import { FavoritesMovies } from "../components/FavoritesMovies";
-import { CustomScrollbar } from "./MovieList";
+// import { CustomScrollbar } from "./MovieList";
 import { MovieType, useFetchMovie } from "../common/hook/useFetchMovie";
 interface IProp {
   movieId: string;
@@ -41,6 +41,7 @@ export const MovieContent = ({ movieId, isShowMore, setIsShowMore }: IProp) => {
     Country,
     Language,
     Director,
+    Released,
   } = data;
 
   useEffect(() => {
@@ -64,7 +65,7 @@ export const MovieContent = ({ movieId, isShowMore, setIsShowMore }: IProp) => {
   };
 
   return (
-    <CustomScrollbar>
+    <>
       <Grid
         container
         justifyContent="center"
@@ -99,9 +100,9 @@ export const MovieContent = ({ movieId, isShowMore, setIsShowMore }: IProp) => {
                 alt="movies-poster"
                 style={{
                   borderRadius: "5px",
-                  objectFit: "cover",
+                  objectFit: "contain",
                   width: "100%",
-                  // height: "auto",
+                  height: "100%",
                 }}
               />
             ) : (
@@ -132,7 +133,7 @@ export const MovieContent = ({ movieId, isShowMore, setIsShowMore }: IProp) => {
               >
                 {Rated}
               </span>
-              {`${Year} · ${Runtime} · ${Country} · ${Language}`}
+              {`${Year} · ${Runtime} · ${Country} · ${Language} `}
             </Typography>
             <Typography variant="h6" color="textSecondary" gutterBottom>
               <strong>Actors: </strong>
@@ -142,6 +143,10 @@ export const MovieContent = ({ movieId, isShowMore, setIsShowMore }: IProp) => {
               <strong>Genre: </strong>
               {Genre} · <strong>Director: </strong>
               {Director}
+            </Typography>
+            <Typography variant="h6" color="textSecondary" gutterBottom>
+              <strong>Released: </strong>
+              {Released}
             </Typography>
             <Typography variant="h6" color="textSecondary">
               <strong>Awards: </strong>
@@ -180,6 +185,6 @@ export const MovieContent = ({ movieId, isShowMore, setIsShowMore }: IProp) => {
           />
         </Grid>
       </Grid>
-    </CustomScrollbar>
+    </>
   );
 };

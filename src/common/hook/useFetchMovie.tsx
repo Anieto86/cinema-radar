@@ -21,6 +21,7 @@ export interface MovieType {
   Country: string;
   Language: string;
   Director: string;
+  Released: string;
 }
 
 export const useFetchMovie = (id: string) => {

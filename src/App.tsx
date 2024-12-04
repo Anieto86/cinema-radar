@@ -26,7 +26,7 @@ function App() {
   const { data, loading, error } = useFetch({ ...params });
 
   if (loading) return <Loading />;
-  if (error) return <div>Something went wrong! Please try agin.</div>;
+  if (error) return <div>Something went wrong! Please try again</div>;
 
   const filteredData = data?.filter((d) => d.Response === "True");
 
@@ -69,24 +69,26 @@ function App() {
           onSearchYear={(_e, newValue) => handleSearchYear(_e, newValue)}
         />
       </Grid>
-      <Grid item xs={4}>
-        <MovieList
-          movies={movies as SearchType[]}
-          totalResult={totalResult as number}
-          selectMovie={selectMovie}
-          onSelectMovie={(index: number) => handleSelectMovie(index)}
-        />
-      </Grid>
-      <Grid item xs={8}>
-        {totalResult ? (
-          <MovieContent
-            movieId={movieId}
-            isShowMore={isShowMore}
-            setIsShowMore={setIsShowMore}
+      <Grid container>
+        <Grid item xs={4}>
+          <MovieList
+            movies={movies as SearchType[]}
+            totalResult={totalResult as number}
+            selectMovie={selectMovie}
+            onSelectMovie={(index: number) => handleSelectMovie(index)}
           />
-        ) : (
-          <NoResult />
-        )}
+        </Grid>
+        <Grid item xs={8}>
+          {totalResult ? (
+            <MovieContent
+              movieId={movieId}
+              isShowMore={isShowMore}
+              setIsShowMore={setIsShowMore}
+            />
+          ) : (
+            <NoResult />
+          )}
+        </Grid>
       </Grid>
       <Grid item xs={12}>
         <Footer />

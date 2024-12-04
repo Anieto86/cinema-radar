@@ -12,13 +12,13 @@ export const CinemaRadarIcon = () => {
       <path
         d="M25 30 Q50 10, 75 30"
         stroke="url(#gradient)"
-        stroke-width="5"
+        strokeWidth="5"
         fill="none"
       />
       <path
         d="M30 40 Q50 20, 70 40"
         stroke="url(#gradient)"
-        stroke-width="5"
+        strokeWidth="5"
         fill="none"
       />
       {/* <path
@@ -30,8 +30,8 @@ export const CinemaRadarIcon = () => {
 
       <defs>
         <linearGradient id="gradient" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#ff9800" />
-          <stop offset="100%" stop-color="#ff1100" />
+          <stop offset="0%" stopColor="#ff9800" />
+          <stop offset="100%" stopColor="#ff1100" />
         </linearGradient>
       </defs>
     </svg>
