@@ -36,7 +36,7 @@ export const useFetch = ({ name, year, type }: IProp) => {
     debounce(async () => {
       setLoading(true);
       try {
-        const URL = `http://www.omdbapi.com/?apikey=${key}`;
+        const URL = `https://www.omdbapi.com/?apikey=${key}`;
 
         const limit = pLimit(10);
 

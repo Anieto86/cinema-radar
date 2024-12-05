@@ -31,7 +31,7 @@ export const useFetchMovie = (id: string) => {
 
   const fetchData = useCallback(async () => {
     setLoading(true);
-    const URL = `http://www.omdbapi.com/?apikey=${key}`;
+    const URL = `https://www.omdbapi.com/?apikey=${key}`;
     const idParam = `&i=${id}`;
     const OMDbAPI = `${URL}${idParam}`;
     try {
